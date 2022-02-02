@@ -10,6 +10,7 @@ using Bulk_Update;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Collections.ObjectModel;
+using bolt5.CloneCopy;
 
 namespace Egate_Ecommerce.Objects
 {

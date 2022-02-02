@@ -83,23 +83,26 @@
     <Reference Include="AForge.Video.DirectShow, Version=2.2.5.0, Culture=neutral, PublicKeyToken=61ea4348d43881b7, processorArchitecture=MSIL">
       <HintPath>..\packages\AForge.Video.DirectShow.2.2.5\lib\AForge.Video.DirectShow.dll</HintPath>
     </Reference>
-    <Reference Include="bolt5.CustomControls.Wpf">
-      <HintPath>..\..\bolt5.CustomControls\bolt5.CustomControls.Wpf\bin\Debug\bolt5.CustomControls.Wpf.dll</HintPath>
+    <Reference Include="bolt5.CloneCopy, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\bolt5.CloneCopy.1.0.0\lib\net40\bolt5.CloneCopy.dll</HintPath>
     </Reference>
-    <Reference Include="bolt5.CustomHtmlCefEditor">
-      <HintPath>..\..\bolt5.CustomControls\bolt5.CustomHtmlCefEditor\bin\x86\Debug\bolt5.CustomHtmlCefEditor.dll</HintPath>
+    <Reference Include="bolt5.CustomControls.Wpf, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\bolt5.CustomControls.Wpf.1.0.0\lib\net45\bolt5.CustomControls.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="bolt5.CustomMappingObject">
-      <HintPath>..\..\bolt5.CustomControls\bolt5.CustomMappingObject\bin\Debug\bolt5.CustomMappingObject.dll</HintPath>
+    <Reference Include="bolt5.CustomHtmlCefEditor, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\packages\bolt5.CustomHtmlCefEditor.1.0.0\lib\net452\bolt5.CustomHtmlCefEditor.dll</HintPath>
     </Reference>
-    <Reference Include="bolt5.CustomMonthlyCalendar">
-      <HintPath>..\..\bolt5.CustomControls\bolt5.CustomMonthlyCalendar\bin\Debug\bolt5.CustomMonthlyCalendar.dll</HintPath>
+    <Reference Include="bolt5.CustomMappingObject, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\bolt5.CustomMappingObject.1.0.0\lib\net45\bolt5.CustomMappingObject.dll</HintPath>
     </Reference>
-    <Reference Include="bolt5.FieldExpressions">
-      <HintPath>..\..\bolt5.CustomControls\bolt5.FieldExpressions\bin\Debug\bolt5.FieldExpressions.dll</HintPath>
+    <Reference Include="bolt5.CustomMonthlyCalendar, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\bolt5.CustomMonthlyCalendar.1.0.0\lib\net45\bolt5.CustomMonthlyCalendar.dll</HintPath>
     </Reference>
-    <Reference Include="bolt5.ModalWpf">
-      <HintPath>..\..\bolt5.CustomControls\bolt5.ModalWpf\bin\Debug\bolt5.ModalWpf.dll</HintPath>
+    <Reference Include="bolt5.FieldExpressions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\bolt5.FieldExpressions.1.0.0\lib\net45\bolt5.FieldExpressions.dll</HintPath>
+    </Reference>
+    <Reference Include="bolt5.ModalWpf, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\bolt5.ModalWpf.1.0.0\lib\net45\bolt5.ModalWpf.dll</HintPath>
     </Reference>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.6.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable.BouncyCastle.1.8.6\lib\net40\BouncyCastle.Crypto.dll</HintPath>
@@ -122,8 +125,8 @@
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FontIcons.Wpf.FontAwesome">
-      <HintPath>..\..\bolt5.CustomControls\FontIcons.Wpf.FontAwesome\bin\Debug\FontIcons.Wpf.FontAwesome.dll</HintPath>
+    <Reference Include="FontIcons.Wpf.FontAwesome, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FontIcons.Wpf.FontAwesome.1.0.0\lib\net40\FontIcons.Wpf.FontAwesome.dll</HintPath>
     </Reference>
     <Reference Include="Ghostscript.NET, Version=1.2.3.0, Culture=neutral, PublicKeyToken=f85051de34525b59, processorArchitecture=MSIL">
       <HintPath>..\packages\Ghostscript.NET.1.2.3\lib\net40\Ghostscript.NET.dll</HintPath>
@@ -258,7 +261,6 @@
     <Compile Include="Enums\EntryLevel.cs" />
     <Compile Include="Enums\KoreaShipStatus.cs" />
     <Compile Include="Enums\TutorialPeriodType.cs" />
-    <Compile Include="Extensions\CloneCopyExt.cs" />
     <Compile Include="Extensions\FileExtension.cs" />
     <Compile Include="Modals\ECommerce\item keywords add modal.xaml.cs">
       <DependentUpon>item keywords add modal.xaml</DependentUpon>

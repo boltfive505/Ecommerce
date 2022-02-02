@@ -8,6 +8,7 @@ using Egate_Ecommerce.Objects.MobileInventory;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using bolt5.CustomMappingObject;
+using bolt5.CloneCopy;
 
 namespace Egate_Ecommerce.Classes
 {

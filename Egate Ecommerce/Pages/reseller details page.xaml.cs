@@ -13,6 +13,7 @@ using Microsoft.Win32;
 using Egate_Ecommerce.Classes;
 using Egate_Ecommerce.Objects;
 using bolt5.ModalWpf;
+using bolt5.CloneCopy;
 using Bulk_Update;
 using Egate_Ecommerce.Modals.ECommerce;
 

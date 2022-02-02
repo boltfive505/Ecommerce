@@ -12,6 +12,7 @@ using Egate_Ecommerce.Objects;
 using Egate_Ecommerce.Modals.ECommerce;
 using Egate_Ecommerce.Quickbooks;
 using bolt5.ModalWpf;
+using bolt5.CloneCopy;
 using System.ComponentModel;
 
 namespace Egate_Ecommerce.Pages

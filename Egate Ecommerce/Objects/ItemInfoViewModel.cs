@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ECommerce.Model;
 using Egate_Ecommerce.Classes;
 using Egate_Ecommerce.Quickbooks;
+using bolt5.CloneCopy;
 
 namespace Egate_Ecommerce.Objects
 {

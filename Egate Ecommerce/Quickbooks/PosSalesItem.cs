@@ -1,5 +1,6 @@
 ﻿using System;
 using bolt5.CustomMappingObject;
+using bolt5.CloneCopy;
 
 namespace Egate_Ecommerce.Quickbooks
 {

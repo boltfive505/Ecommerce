@@ -12,6 +12,7 @@ using Egate_Ecommerce.Objects.KoreaShipList;
 using NPOI.SS.Util;
 using NPOI.HSSF.UserModel;
 using System.Globalization;
+using bolt5.CloneCopy;
 
 namespace Egate_Ecommerce.Classes
 {

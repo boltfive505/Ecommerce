@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using bolt5.CustomMappingObject;
+using bolt5.CloneCopy;
 
 namespace Egate_Ecommerce.Objects.MobileInventory
 {

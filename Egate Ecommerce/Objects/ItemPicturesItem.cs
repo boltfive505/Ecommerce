@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using Microsoft.Win32;
 using Egate_Ecommerce.Classes;
+using bolt5.CloneCopy;
 
 namespace Egate_Ecommerce.Objects
 {

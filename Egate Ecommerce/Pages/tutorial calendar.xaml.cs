@@ -12,6 +12,7 @@ using Egate_Ecommerce.Objects.Calendar;
 using Egate_Ecommerce.Objects.Tutorials;
 using bolt5.ModalWpf;
 using bolt5.CustomMonthlyCalendar;
+using bolt5.CloneCopy;
 
 namespace Egate_Ecommerce.Pages
 {
