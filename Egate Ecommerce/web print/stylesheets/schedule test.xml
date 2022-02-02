@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="schedule.xsl"?>
+<ArrayOfScheduleXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ScheduleXml>
+    <Title>yes &amp; no&lt;hello&gt;"test &amp; test"</Title>
+    <Category>category1</Category>
+    <EntryLevel>Advanced</EntryLevel>
+    <AssignedTo>Anna Marie Germino</AssignedTo>
+  </ScheduleXml>
+  <ScheduleXml>
+    <Title>testing the application</Title>
+    <Category>category1</Category>
+    <EntryLevel>Beginner</EntryLevel>
+  </ScheduleXml>
+</ArrayOfScheduleXml>

@@ -1,0 +1,96 @@
+﻿<Window x:Class="Egate_Ecommerce.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Egate_Ecommerce"
+        xmlns:pages="clr-namespace:Egate_Ecommerce.Pages"
+        xmlns:modals="clr-namespace:bolt5.ModalWpf;assembly=bolt5.ModalWpf"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="710.287" Width="817.493" WindowState="Maximized" WindowStartupLocation="CenterScreen"
+        Icon="egate ecommerce logo.ico"
+        Loaded="Window_Loaded"
+        TextOptions.TextFormattingMode="Display" TextOptions.TextHintingMode="Auto" TextOptions.TextRenderingMode="ClearType">
+    <Window.Resources>
+        <SolidColorBrush x:Key="KoreaProcessForeground" Color="#ffb3b3"/>
+    </Window.Resources>
+    <Grid>
+        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TabStripPlacement="Top" HorizontalContentAlignment="Center" Padding="0" Margin="0" FontSize="12" FontWeight="Bold" Background="White"
+                    local:MainWindow.ChangeTab="TabControl_ChangeTab">
+            <TabItem Header="CANVAS" Padding="{StaticResource TabItemPadding}" Background="{StaticResource Create.Button.Background}" local:MainWindow.PageTabName="CreateRequest">
+                <Frame Margin="{StaticResource FrameMargin}">
+                    <Frame.Content>
+                        <pages:create_purchase_request/>
+                    </Frame.Content>
+                </Frame>
+            </TabItem>
+            <TabItem Header="CANVAS" Padding="{StaticResource TabItemPadding}" Background="{StaticResource Create.Button.Background}" local:MainWindow.PageTabName="CreateRequest">
+                <Frame Margin="{StaticResource FrameMargin}">
+                    <Frame.Content>
+                        <pages:item_info_page/>
+                    </Frame.Content>
+                </Frame>
+            </TabItem>
+            <TabItem Header="NEW ITEMS" Padding="{StaticResource TabItemPadding}" Background="{StaticResource Create.Button.Background}" local:MainWindow.PageTabName="CreateRequest">
+                <Frame Margin="{StaticResource FrameMargin}">
+                    <Frame.Content>
+                        <pages:new_items_page/>
+                    </Frame.Content>
+                </Frame>
+            </TabItem>
+            <TabItem Header="KEYWORDS" Padding="{StaticResource TabItemPadding}" Background="{StaticResource Create.Button.Background}" local:MainWindow.PageTabName="CreateRequest">
+                <Frame Margin="{StaticResource FrameMargin}">
+                    <Frame.Content>
+                        <pages:item_keywords_page/>
+                    </Frame.Content>
+                </Frame>
+            </TabItem>
+            <TabItem Header="POS vs WOO STORE" Padding="{StaticResource TabItemPadding}" Background="{StaticResource Create.Button.Background}" local:MainWindow.PageTabName="CreateRequest">
+                <Frame Margin="{StaticResource FrameMargin}">
+                    <Frame.Content>
+                        <pages:reseller_comparison_page/>
+                    </Frame.Content>
+                </Frame>
+            </TabItem>
+            <TabItem Header="WOO STORE vs SHOPEE" Padding="{StaticResource TabItemPadding}" Background="{StaticResource Create.Button.Background}" local:MainWindow.PageTabName="CreateRequest">
+                <Frame Margin="{StaticResource FrameMargin}">
+                    <Frame.Content>
+                        <pages:reseller_shopee_comparison_page/>
+                    </Frame.Content>
+                </Frame>
+            </TabItem>
+            <TabItem Header="WOO PRODUCTS" Padding="{StaticResource TabItemPadding}" Background="{StaticResource Create.Button.Background}" local:MainWindow.PageTabName="CreateRequest">
+                <Frame Margin="{StaticResource FrameMargin}">
+                    <Frame.Content>
+                        <pages:reseller_details_page/>
+                    </Frame.Content>
+                </Frame>
+            </TabItem>
+            <TabItem Header="SETUP" Padding="{StaticResource TabItemPadding}" Background="{StaticResource Create.Button.Background}">
+                <Frame Margin="{StaticResource FrameMargin}">
+                    <Frame.Content>
+                        <pages:setup_page/>
+                    </Frame.Content>
+                </Frame>
+            </TabItem>
+            <TabItem Header="TUTORIALS" Padding="{StaticResource TabItemPadding}" local:MainWindow.PageTabName="Tutorials">
+                <Frame Margin="{StaticResource FrameMargin}">
+                    <Frame.Content>
+                        <pages:tutorials x:Name="tutorialsPage"/>
+                    </Frame.Content>
+                </Frame>
+            </TabItem>
+            <TabItem Header="CALENDAR" Padding="{StaticResource TabItemPadding}" local:MainWindow.PageTabName="Calendar">
+                <Frame Margin="{StaticResource FrameMargin}">
+                    <Frame.Content>
+                        <pages:tutorial_calendar/>
+                    </Frame.Content>
+                </Frame>
+            </TabItem>
+        </TabControl>
+
+        <Grid>
+            <modals:ModalForm Visibility="Hidden"/>
+        </Grid>
+    </Grid>
+</Window>

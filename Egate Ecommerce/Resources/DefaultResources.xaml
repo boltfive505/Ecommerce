@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:me="clr-namespace:Egate_Ecommerce"
+                    xmlns:local="clr-namespace:Egate_Ecommerce.Resources"
+                    xmlns:System="clr-namespace:System;assembly=mscorlib">
+    <ObjectDataProvider x:Key="ShipTypeData" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="me:ShipType"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+    <ObjectDataProvider x:Key="ItemInfoCategoryDataAll" MethodName="GetValues" ObjectType="{x:Type me:EnumExt}">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="me:ItemInfoCategory"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+    <ObjectDataProvider x:Key="ItemInfoCategoryDataAdding" MethodName="GetValues" ObjectType="{x:Type me:EnumExt}">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="me:ItemInfoCategory"/>
+            <x:Static Member="me:ItemInfoCategory.All"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+    <ObjectDataProvider x:Key="CompetitorLocationDataAll" MethodName="GetValues" ObjectType="{x:Type me:EnumExt}">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="me:CompetitorLocation"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <System:String x:Key="ProceedButtonLabel">Proceed - 포장완료</System:String>
+    <System:String x:Key="CancelButtonLabel">Cancel - 취소</System:String>
+
+    <System:String x:Key="CreatePurchaseRequest.Label">CREATE PURCHASE REQUEST</System:String>
+    <System:String x:Key="OrderPurchaseRequest.Label">CREATE ORDER - 구매확정</System:String>
+    <System:String x:Key="ApprovedPurchaseRequest.Label">RECEIVED ITEM - 창고 입고 완료</System:String>
+    <System:String x:Key="PackingPurchaseRequest.Label">CREATE PACKING - 포장 진행 확정</System:String>
+    <System:String x:Key="ShippingPurchaseRequest.Label">CREATE SHIPPING REQUEST</System:String>
+    <System:String x:Key="ReceivingDelivery.Label">CREATE RECEIVING REQUEST</System:String>
+
+    <System:String x:Key="LuckySelectContainer.Label">SELECT CONTAINER - 선적정보 입력</System:String>
+</ResourceDictionary>

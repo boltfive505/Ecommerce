@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="Egate_Ecommerce.Templates.ItemInfoListPopup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Egate_Ecommerce.Templates"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <!-- item info list -->
+        <DataGrid Grid.Row="1" ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:ItemInfoListPopup}},Path=ItemInfoList}">
+            <DataGrid.Columns>
+                <!--<DataGridTextColumn Header="SKU" Binding="{Binding ItemNumber}" HeaderStyle="{StaticResource DataGridColumnHeader.Center}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Center}"/>-->
+                <DataGridTextColumn Header="Category" Binding="{Binding Category}" HeaderStyle="{StaticResource DataGridColumnHeader.Left}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}"/>
+                <!--<DataGridTextColumn Header="POS Price" Binding="{Binding PosItem.RegularPrice,StringFormat=N0}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}" Foreground="Blue" FontWeight="Bold"/>-->
+                <!--<DataGridTemplateColumn Header="Item" Width="350">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Margin="{StaticResource DataGridTextCell.Margin}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <ToggleButton Click="ShowImageFullView_Click" Width="40" Height="40" Padding="0" Background="White" BorderBrush="Gainsboro" BorderThickness="1" Cursor="Hand" Tag="{Binding PosItem.ImagePath,Mode=OneWay}" Template="{StaticResource BlankToggleButton}" ToolTip="Click for Full-View">
+                                    <Image Source="{Binding PosItem.ImagePath,Converter={StaticResource BitmapImageConverter}}"/>
+                                </ToggleButton>
+                                <TextBlock Grid.Column="1" Margin="5,0,0,0" TextTrimming="CharacterEllipsis">
+                                    <Run Text="{Binding PosItem.ItemName}"/><LineBreak/>
+                                    <Run Text="{Binding PosItem.ItemDescription}" Foreground="Gray" FontStyle="Italic" FontSize="11"/>
+                                </TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Department" Binding="{Binding PosItem.DepartmentName}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}"/>-->
+                <DataGridTextColumn Header="Updated" Binding="{Binding UpdatedDate,StringFormat=MM/dd/yy}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}" Foreground="Gray"/>
+                <DataGridTextColumn Header="By" Binding="{Binding UpdatedByEmployee.EmployeeName}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}" Foreground="Gray" Width="80"/>
+                <DataGridTemplateColumn Header="Url" HeaderStyle="{StaticResource DataGridColumnHeader.Center}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-globe-americas}" Foreground="#495057" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                    ToolTip="{Binding CompetitorUrl}" Command="{Binding OpenURLCommand}">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BorderlessButton}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding CompetitorUrl}" Value="">
+                                                <Setter Property="Visibility" Value="Hidden"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding CompetitorUrl}" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Hidden"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Price" Binding="{Binding CompetitorPrice,StringFormat=N0}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}" Foreground="Red" FontWeight="Bold"/>
+                <DataGridTextColumn Header="Ratings" Binding="{Binding CompetitorRatings}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}"/>
+                <DataGridCheckBoxColumn Header="Stocks" Binding="{Binding CompetitorHasStocks}" HeaderStyle="{StaticResource DataGridColumnHeader.Center}" ElementStyle="{StaticResource DataGridCheckBoxColumn.ElementStyle}"/>
+                <DataGridTextColumn Header="Location" Binding="{Binding CompetitorLocation}" HeaderStyle="{StaticResource DataGridColumnHeader.Left}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}"/>
+                <DataGridTextColumn Header="Writer's Notes" Binding="{Binding ShortDescription,Converter={StaticResource HtmlToPlainTextConverter}}" HeaderStyle="{StaticResource DataGridColumnHeader.Left}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}" Width="*"/>
+                <DataGridTextColumn Header="Long Desc." Binding="{Binding LongDescription,Converter={StaticResource HtmlToPlainTextConverter}}" HeaderStyle="{StaticResource DataGridColumnHeader.Left}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

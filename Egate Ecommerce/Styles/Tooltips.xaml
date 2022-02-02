@@ -1,0 +1,135 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Egate_Ecommerce.Styles">
+    <Style x:Key="QuestionTextboxStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource fontawesome-solid}"/>
+        <Setter Property="Text" Value="{StaticResource fa-question-circle}"/>
+        <Setter Property="Foreground" Value="SteelBlue"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="ToolTipService.InitialShowDelay" Value="0"/>
+        <Setter Property="ToolTipService.ShowDuration" Value="999999"/>
+    </Style>
+
+    <Style x:Key="QuestionRunStyle" TargetType="{x:Type Run}">
+        <Setter Property="FontFamily" Value="{StaticResource fontawesome-solid}"/>
+        <Setter Property="Text" Value="{StaticResource fa-question-circle}"/>
+        <Setter Property="Foreground" Value="SteelBlue"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="ToolTipService.InitialShowDelay" Value="0"/>
+        <Setter Property="ToolTipService.ShowDuration" Value="999999"/>
+    </Style>
+
+    <ToolTip x:Key="SalesPeriodLatestTooltip">
+        <TextBlock FontSize="14" MaxWidth="700" TextWrapping="Wrap">
+            <Run FontWeight="Bold">Purpose:</Run> For checking Monthly Sales info of our items. Used to decide the quantity of items to request from supplier.<LineBreak/><LineBreak/>
+            <Run FontWeight="Bold">NOTE:</Run> <Run Foreground="Red" FontStyle="Italic">This must be updated everyday, before end of office time or 04:00 pm. If not updated, report to the Management.</Run><LineBreak/><LineBreak/>
+            <Run FontWeight="Bold">How to:</Run><LineBreak/>
+            1. Open Quickbooks POS from the server, using TeamViewer.<LineBreak/>
+            2. Go to Reports > Monthly Sales.<LineBreak/>
+            3. Filter by Date Period for <Run Foreground="Purple">1 month</Run> since today (from last month to today).<LineBreak/>
+            4. Export the report to Excel.<LineBreak/>
+            5. Save the exported excel file to the "qb folder". <Run Foreground="Red">Make sure to save it with the same file name, or it will not work.</Run><LineBreak/>
+            6. Repeat from Step 1, but this time it will be filtered by Date Period for <Run Foreground="Purple">3 months</Run> and <Run Foreground="Purple">6 months</Run>.
+        </TextBlock>
+    </ToolTip>
+
+    <ToolTip x:Key="InventoryLatestTooltip">
+        <TextBlock FontSize="14" MaxWidth="700" TextWrapping="Wrap">
+            <Run FontWeight="Bold">Purpose:</Run> For checking item stocks. Used to decide when to request stocks before it gets out-of-stocks.<LineBreak/><LineBreak/>
+            <Run FontWeight="Bold">NOTE:</Run> <Run Foreground="Red" FontStyle="Italic">This must be updated everyday, before end of office time or 04:00 pm. If not updated, report to the Management.</Run><LineBreak/><LineBreak/>
+            <Run FontWeight="Bold">How to:</Run><LineBreak/>
+            1. Open Quickbooks POS from the server, using TeamViewer.<LineBreak/>
+            2. Login as SysAdmin. Only the admin can do exporting.<LineBreak/>
+            3. Go to Files > Utilities > Export. Then select Inventory Items.<LineBreak/>
+            4. Select destination file -> select from the "qb folder". <Run Foreground="Red">Make sure to save it with the same file name, or it will not work.</Run><LineBreak/>
+            5. Write records to -> Sheet1.<LineBreak/>
+            6. Choose export template -> Default Inventory Template <Run FontStyle="Italic">(this will export all information)</Run>.<LineBreak/>
+        </TextBlock>
+    </ToolTip>
+
+    <ToolTip x:Key="PackagesToBeReceivedTooltip">
+        <Grid Width="500" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock TextWrapping="Wrap" FontSize="14" Foreground="Red">This Qty should be always same as Qty of P.O List at QB POS.<LineBreak/>"Packages to be Received" means that we create Purchase Order before Shipping Arrival. If we received this item, we will process Receiving at QB POS.</TextBlock>
+            <Image Grid.Row="1" Source="pack://application:,,,/res/po list.jpg" Margin="0,10,0,0"/>
+        </Grid>
+    </ToolTip>
+
+    <ToolTip x:Key="LuckyInDateTooltip">
+        <TextBlock FontSize="14">
+            Date product arrived in Korea Lucky Warehouse.<LineBreak/><LineBreak/>
+            The second date below is the Estimated Date (Lucky-In Date + 20 days) which is the estimated date to be arrived.<LineBreak/>
+            If the font color of Estimated Date is red -> need to call Lucky to follow-up delivery and update ETA information.
+        </TextBlock>
+    </ToolTip>
+
+    <ToolTip x:Key="EstimatedDateTooltip">
+        <TextBlock FontSize="14">
+            Estimated Date (Lucky-In Date + 20 days) is the estimated date to be arrived.<LineBreak/>
+            If the font color of Estimated Date is red -> need to call Lucky to follow-up delivery and update ETA information.
+        </TextBlock>
+    </ToolTip>
+
+    <ToolTip x:Key="ShowNotInResellerTooltip">
+        <TextBlock FontSize="14">
+            Show Product List in Quickbooks POS, that are <Run FontWeight="Bold">NOT</Run> in Reseller Site.<LineBreak/>
+            Need to add these products to Reseller Site for sale.
+        </TextBlock>
+    </ToolTip>
+
+    <ToolTip x:Key="ItemNotInResellerTooltip">
+        <TextBlock FontSize="14">
+            <Run Foreground="Red">This product ( Product Name text color is RED ) is</Run> <Run Foreground="Red" FontWeight="Bold">NOT</Run> <Run Foreground="Red">in Reseller Site.</Run><LineBreak/>
+            Need to add these products to Reseller Site for sale.
+        </TextBlock>
+    </ToolTip>
+
+    <ToolTip x:Key="ItemNotInShopeeTooltip">
+        <TextBlock FontSize="14">
+            <Run Foreground="Red">This product ( Product Name text color is RED ) is</Run> <Run Foreground="Red" FontWeight="Bold">NOT</Run> <Run Foreground="Red">in Shopee.</Run><LineBreak/>
+            Need to add these products to Shopee for sale.
+        </TextBlock>
+    </ToolTip>
+
+    <ToolTip x:Key="ImportResellerFileTooltip">
+        <TextBlock FontSize="14">
+            Import CSV file which is exported from Reseller Site
+        </TextBlock>
+    </ToolTip>
+
+    <ToolTip x:Key="ExportResellerFileTooltip">
+        <TextBlock FontSize="14">
+            Export <Run FontWeight="Bold">Updated</Run> CSV file, then Import this file to Reseller Site
+        </TextBlock>
+    </ToolTip>
+
+    <ToolTip x:Key="ImportShopeeFileTooltip">
+        <TextBlock FontSize="14">
+            Import Excel file which is exported from Shopee
+        </TextBlock>
+    </ToolTip>
+
+    <ToolTip x:Key="ExportShopeeFileTooltip">
+        <TextBlock FontSize="14">
+            Export <Run FontWeight="Bold">Updated</Run> Excel file, then Import this file to Shopee
+        </TextBlock>
+    </ToolTip>
+    
+    <ToolTip x:Key="SpecialKeywordFilterTooltip">
+        <TextBlock FontSize="14">
+            This will search for <Run Foreground="Red">exact keywords</Run> in <Run FontWeight="Bold">Item Name</Run> &amp; <Run FontWeight="Bold">Description</Run><LineBreak/>
+            This will check if the product is searchable when put in Lazada / Shopee.
+        </TextBlock>
+    </ToolTip>
+
+    <ToolTip x:Key="PosImageTooltip">
+        <TextBlock FontSize="14">
+            This image is from QB POS.<LineBreak/>
+            <Run Foreground="Red">This image cannot be replaced.</Run>
+        </TextBlock>
+    </ToolTip>
+</ResourceDictionary>

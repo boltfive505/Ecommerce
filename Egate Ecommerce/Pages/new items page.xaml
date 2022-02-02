@@ -1,0 +1,74 @@
+﻿<Page x:Class="Egate_Ecommerce.Pages.new_items_page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Egate_Ecommerce.Pages"
+      xmlns:templates="clr-namespace:Egate_Ecommerce.Templates"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="new_items_page" Loaded="Page_Loaded">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Button Content="Add New Item" Click="AddNewItem_Click" Background="LightGreen"/>
+        </StackPanel>
+        <!-- Items List -->
+        <DataGrid Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding NewItemsView, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Style="{StaticResource DataGridCell.GridStyle.ShowOnHover}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="{StaticResource DataGridTextCell.Margin}">
+                                <Button Style="{StaticResource BorderlessButton}" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-edit}" Click="AddNewItem_Click" Foreground="Navy" ToolTip="Edit New Item"/>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Item" Width="450" SortMemberPath="ItemName">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <templates:DataGridItemTemplate Margin="{StaticResource DataGridTextCell.Margin}"
+                                                            ImageSource="{Binding ImagePath}"
+                                                            Title="{Binding ItemName}"
+                                                            Description="{Binding ItemDescription}"
+                                                            ShowNotes="False"
+                                                            ShowQuantity="False"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Updated" Binding="{Binding ItemInfo.UpdatedDate,StringFormat=MM/dd/yy}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}" Foreground="Gray"/>
+                <DataGridTextColumn Header="By" Binding="{Binding ItemInfo.UpdatedByEmployee.EmployeeName}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}" Foreground="Gray" Width="80"/>
+                <DataGridTemplateColumn Header="Url" HeaderStyle="{StaticResource DataGridColumnHeader.Center}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-globe-americas}" Foreground="#495057" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                    ToolTip="{Binding ItemInfo.CompetitorUrl}" Command="{Binding ItemInfo.OpenURLCommand}">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BorderlessButton}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ItemInfo.CompetitorUrl}" Value="">
+                                                <Setter Property="Visibility" Value="Hidden"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ItemInfo.CompetitorUrl}" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Hidden"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Price" Binding="{Binding ItemInfo.CompetitorPrice,StringFormat=N0}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}" Foreground="Red" FontWeight="Bold"/>
+                <DataGridTextColumn Header="Ratings" Binding="{Binding ItemInfo.CompetitorRatings}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}"/>
+                <DataGridCheckBoxColumn Header="Stocks" Binding="{Binding ItemInfo.CompetitorHasStocks}" HeaderStyle="{StaticResource DataGridColumnHeader.Center}" ElementStyle="{StaticResource DataGridCheckBoxColumn.ElementStyle}"/>
+                <DataGridTextColumn Header="Location" Binding="{Binding ItemInfo.CompetitorLocation}" HeaderStyle="{StaticResource DataGridColumnHeader.Left}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}"/>
+                <DataGridTextColumn Header="Writer's Notes" Binding="{Binding ItemInfo.ShortDescription,Converter={StaticResource HtmlToPlainTextConverter}}" HeaderStyle="{StaticResource DataGridColumnHeader.Left}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

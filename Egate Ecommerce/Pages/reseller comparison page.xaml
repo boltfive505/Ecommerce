@@ -1,0 +1,592 @@
+﻿<Page x:Class="Egate_Ecommerce.Pages.reseller_comparison_page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Egate_Ecommerce.Pages"
+      xmlns:me="clr-namespace:Egate_Ecommerce"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:converters="clr-namespace:Egate_Ecommerce.Converters"
+      xmlns:templates="clr-namespace:Egate_Ecommerce.Templates"
+      xmlns:ext="clr-namespace:Egate_Ecommerce.Extensions"
+      xmlns:customs="clr-namespace:bolt5.CustomControls;assembly=bolt5.CustomControls.Wpf"
+      xmlns:qb="clr-namespace:Egate_Ecommerce.Quickbooks"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="reseller_comparison_page" Loaded="Page_Loaded">
+    <Page.Resources>
+        <converters:BitmapImageConverter x:Key="BitmapImageConverter" DecodePixelHeight="100"/>
+        <converters:BitmapImageConverter x:Key="BitmapImageConverterFull"/>
+        <converters:ObjectEqualMultiConverter x:Key="ObjectEqualMultiConverter"/>
+    </Page.Resources>
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="130"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.25*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Margin="0,0,7,7" DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_comparison_page}}}">
+            <StackPanel Orientation="Horizontal">
+                <!-- pos filters -->
+                <GroupBox VerticalAlignment="Top" HorizontalAlignment="Left"
+                      DataContext="{Binding Path=FiltersPos}">
+                    <GroupBox.Header>
+                        <TextBlock Text="QB POS" FontWeight="Bold" Foreground="DarkOrange" FontSize="14"/>
+                    </GroupBox.Header>
+                    <StackPanel Orientation="Vertical" Margin="3">
+                        <StackPanel Orientation="Horizontal" Margin="0,2,0,2">
+                            <customs:LabelContainer Header="Keyword" Margin="{StaticResource WrapPanelSpacing}">
+                                <TextBox Text="{Binding FilterKeyword,UpdateSourceTrigger=PropertyChanged}" Width="250"/>
+                            </customs:LabelContainer>
+                            <customs:LabelContainer Header="Department" Margin="{StaticResource WrapPanelSpacing}">
+                                <ComboBox Width="180" ItemsSource="{Binding Source={x:Static qb:QbPosInventory.DepartmentListSelection}}" SelectedItem="{Binding FilterDepartment,UpdateSourceTrigger=PropertyChanged}"/>
+                            </customs:LabelContainer>
+                            <customs:LabelContainer Header="" Margin="{StaticResource WrapPanelResetSpacing}">
+                                <Button FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-undo-alt}" Command="{Binding ResetCommand}" Height="22" Width="22" Padding="0"/>
+                            </customs:LabelContainer>
+                            <customs:LabelContainer Header="" Margin="{StaticResource WrapPanelResetSpacing}"
+                                                    DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_comparison_page}}}">
+                                <!-- print items -->
+                                <Button FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-print}" Foreground="#487fc1" Width="22" Height="22" Padding="0"
+                                        Click="PrintItems_Click" Tag="{Binding Path=PosItemsView}"/>
+                            </customs:LabelContainer>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+                <!-- file -->
+                <customs:LabelContainer Header="Open QB POS File: " Placement="Left" VerticalAlignment="Top" Margin="50,7,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Click="OpenFile_Click" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-file}" Style="{StaticResource BorderlessButton}" Foreground="#f5c603" FontSize="13" ToolTip="Click to open file"
+                                me:FileExtension.FileName="{Binding Source={x:Static qb:QbPosInventory.InventoryFile}}"/>
+                        <!-- file date -->
+                        <TextBlock Text="{Binding Path=TotalsPos.FileDate,StringFormat=MM/dd/yyyy}" VerticalAlignment="Center" Margin="5,0,0,0" Foreground="Gray"/>
+                    </StackPanel>
+                </customs:LabelContainer>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+                <!-- pos totals -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" DataContext="{Binding Path=TotalsPos,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_comparison_page}}}">
+                    <TextBlock>
+                    QB POS Qty: <Run Text="{Binding TotalCount}" FontWeight="Bold" Foreground="Green"/>
+                    </TextBlock>
+                    <Button Style="{StaticResource LinkButton}" Click="ShowMissing_Click" Margin="30,0,0,0" IsHitTestVisible="False"
+                        Tag="{Binding Path=FiltersPos,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_comparison_page}}}">
+                        <TextBlock Foreground="Black">
+                        Not In Woo Store: <Run Text="{Binding NotExistsCount}" FontWeight="Bold" Foreground="Red"/>
+                        </TextBlock>
+                    </Button>
+                </StackPanel>
+                <!-- stock status -->
+                <ComboBox SelectedIndex="{Binding FiltersPos.FilterStockStatus}" Width="100" Margin="30,0,0,0" VerticalAlignment="Bottom">
+                    <ComboBoxItem>All Items</ComboBoxItem>
+                    <ComboBoxItem>With Stock</ComboBoxItem>
+                    <ComboBoxItem>Without Stock</ComboBoxItem>
+                </ComboBox>
+                <!-- show missing -->
+                <CheckBox VerticalAlignment="Bottom" Margin="20,0,0,0" IsChecked="{Binding Path=FiltersPos.ShowNotExists,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_comparison_page}}}">
+                    <CheckBox.Content>
+                        <TextBlock ToolTip="{StaticResource ShowNotInResellerTooltip}" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="999999">
+                            Show NOT in Woo Store <Run Style="{StaticResource QuestionRunStyle}"/>
+                        </TextBlock>
+                    </CheckBox.Content>
+                </CheckBox>
+                <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Margin="20,0,0,0">
+                    <!-- show memo -->
+                    <CheckBox Content="Show with Memo (To Do)" IsChecked="{Binding Path=FiltersPos.ShowMemo,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_comparison_page}}}"/>
+                    <!-- show to be updated -->
+                    <CheckBox Content="Show Checked Product" IsChecked="{Binding Path=FiltersPos.ShowDetailToBeUpdated,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_comparison_page}}}"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Margin="20,0,0,0">
+                    <!-- clear all memo -->
+                    <Button Content="Clear ALL Memo" Click="ClearAllMemo_Click" Style="{StaticResource LinkButton}" Foreground="Red" BorderBrush="Red"/>
+                    <!-- clear all to be updated -->
+                    <Button Content="Clear ALL Checked Product" Click="ClearAllToBeUpdated_Click" Style="{StaticResource LinkButton}" Foreground="Red" BorderBrush="Red"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        
+        <Grid Grid.Column="1" Margin="7,0,0,8"
+              DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_comparison_page}}}">
+            <StackPanel Orientation="Horizontal">
+                <!-- reseller filters -->
+                <GroupBox VerticalAlignment="Top" HorizontalAlignment="Left" DataContext="{Binding FiltersReseller}">
+                    <GroupBox.Header>
+                        <TextBlock Text="WOO STORE" FontWeight="Bold" Foreground="DarkOrange" FontSize="14"/>
+                    </GroupBox.Header>
+                    <StackPanel Orientation="Vertical" Margin="3">
+                        <StackPanel Orientation="Horizontal" Margin="0,2,0,2">
+                            <customs:LabelContainer Header="Keyword" Margin="{StaticResource WrapPanelSpacing}">
+                                <TextBox Text="{Binding FilterKeyword,UpdateSourceTrigger=PropertyChanged}" Width="250"/>
+                            </customs:LabelContainer>
+                            <customs:LabelContainer Header="" Margin="{StaticResource WrapPanelResetSpacing}">
+                                <Button FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-undo-alt}" Command="{Binding ResetCommand}" Height="22" Width="22" Padding="0"/>
+                            </customs:LabelContainer>
+                            <customs:LabelContainer Header="" Margin="{StaticResource WrapPanelResetSpacing}"
+                                                    DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_comparison_page}}}">
+                                <!-- print items -->
+                                <Button FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-print}" Foreground="#487fc1" Width="22" Height="22" Padding="0"
+                                        Click="PrintItems_Click" Tag="{Binding Path=ResellerItemsView}"/>
+                            </customs:LabelContainer>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+                <Grid Margin="50,7,0,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                        <!-- import reseller excel file -->
+                        <Button Click="ImportResellerFile_Click" Background="LightGreen">
+                            <TextBlock ToolTip="{StaticResource ImportResellerFileTooltip}" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="999999">
+                                Import <Run Style="{StaticResource QuestionRunStyle}"/>
+                            </TextBlock>
+                        </Button>
+                        <!-- file -->
+                        <customs:LabelContainer Header="Open Woo Store File: " Placement="Left" Margin="15,0,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <Button Click="OpenFile_Click" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-file}" Style="{StaticResource BorderlessButton}" Foreground="#f5c603" FontSize="13" ToolTip="Click to open file"
+                                        me:FileExtension.FileName="{Binding ResellerFile}" HorizontalAlignment="Left"/>
+                                <!-- file date -->
+                                <TextBlock Text="{Binding TotalsReseller.FileDate,StringFormat=MM/dd/yyyy}" VerticalAlignment="Center" Margin="5,0,0,0" Foreground="Gray"/>
+                            </StackPanel>
+                        </customs:LabelContainer>
+                    </StackPanel>
+                    <!-- export reseller excel file -->
+                    <Button Click="ExportResellerFile_Click" Background="Purple" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,41">
+                        <TextBlock ToolTip="{StaticResource ExportResellerFileTooltip}" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="999999">
+                                Export <Run Style="{StaticResource QuestionRunStyle}"/>
+                        </TextBlock>
+                    </Button>
+                </Grid>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+                <!-- reseller totals -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom"
+                        DataContext="{Binding TotalsReseller}">
+                    <TextBlock>
+                    Woo Store Qty: <Run Text="{Binding TotalCount}" FontWeight="Bold" Foreground="Green"/>
+                    </TextBlock>
+                    <Button Style="{StaticResource LinkButton}" Click="ShowMissing_Click" Margin="30,0,0,0" IsHitTestVisible="False"
+                        Tag="{Binding Path=FiltersReseller,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_comparison_page}}}">
+                        <TextBlock Margin="30,0,0,0" Foreground="Black">
+                        Not In QB POS: <Run Text="{Binding NotExistsCount}" FontWeight="Bold" Foreground="Red"/>
+                        </TextBlock>
+                    </Button>
+                </StackPanel>
+                <!-- show missing -->
+                <CheckBox Content="Show Not In POS" VerticalAlignment="Bottom" Margin="30,0,0,0"
+                           IsChecked="{Binding Path=FiltersReseller.ShowNotExists,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_comparison_page}}}"/>
+                <!-- show to be updated -->
+                <CheckBox Content="Show Products to be Updated" VerticalAlignment="Bottom" Margin="30,0,0,0"
+                           IsChecked="{Binding Path=FiltersReseller.ShowProductToBeUpdated,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_comparison_page}}}"/>
+            </StackPanel>
+        </Grid>
+        
+        <!-- image full view popup -->
+        <!--<Popup x:Name="imageFullPopup" StaysOpen="False" AllowsTransparency="True" Placement="Mouse">
+            <Border Width="500" Height="500" Background="White" BorderBrush="Gainsboro" BorderThickness="1">
+                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Source="{Binding ImagePath,Converter={StaticResource BitmapImageConverterFull}}"/>
+            </Border>
+        </Popup>-->
+        <templates:ImagePreviewPopup x:Name="imageFullPopup" Placement="Mouse"
+                                     ImageSource="{Binding ImagePath}"/>
+
+        <!-- edit name popup -->
+        <customs:PopupModal x:Name="editItemNamePopup" Placement="Bottom">
+            <Grid>
+                <Grid.Effect>
+                    <DropShadowEffect/>
+                </Grid.Effect>
+                <Border Background="White" BorderBrush="Gray" BorderThickness="1" Margin="0,0,3,3">
+                    <Grid Margin="8">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <customs:LabelContainer Header="Edit Item Name">
+                            <TextBox Text="{Binding ItemName,UpdateSourceTrigger=PropertyChanged}" Width="300" TextWrapping="WrapWithOverflow"/>
+                        </customs:LabelContainer>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" Margin="0,3,0,0">
+                            <Button Content="Cancel" Command="{Binding ElementName=editItemNamePopup,Path=CloseCommand}" Background="Salmon"/>
+                            <Button Content="Save" Command="{Binding ElementName=editItemNamePopup,Path=SubmitCommand}" Background="LightGreen"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+        </customs:PopupModal>
+
+        <!-- edit memo popup -->
+        <customs:PopupModal x:Name="editDetailsMemoPopup" Placement="Bottom">
+            <Grid>
+                <Grid.Effect>
+                    <DropShadowEffect/>
+                </Grid.Effect>
+                <Border Background="White" BorderBrush="Gray" BorderThickness="1" Margin="0,0,3,3">
+                    <Grid Margin="8">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <customs:LabelContainer Header="Edit Memo">
+                            <TextBox Text="{Binding Memo,UpdateSourceTrigger=PropertyChanged}" Width="300" Height="70" TextWrapping="WrapWithOverflow"/>
+                        </customs:LabelContainer>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Left" Margin="0,3,0,0">
+                            <Button Content="Clear" Command="{Binding Path=ClearMemoCommand}" Style="{StaticResource LinkButton}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" Margin="0,3,0,0">
+                            <Button Content="Cancel" Command="{Binding ElementName=editDetailsMemoPopup,Path=CloseCommand}" Background="Salmon"/>
+                            <Button Content="Save" Command="{Binding ElementName=editDetailsMemoPopup,Path=SubmitCommand}" Background="LightGreen"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+        </customs:PopupModal>
+        
+        <!-- show canvas listing popup -->
+        <customs:PopupModal x:Name="showCanvasListingPopup" Placement="Right" HorizontalOffset="8">
+            <Grid>
+                <Grid.Effect>
+                    <DropShadowEffect/>
+                </Grid.Effect>
+                <Border Background="White" BorderBrush="Gray" BorderThickness="1" Margin="0,0,3,3">
+                    <Grid Margin="8">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock FontWeight="Bold" FontSize="14" Margin="0,0,0,5">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}Canvas Listing for ( {0} ) {1}">
+                                    <Binding Path="PosItem.ItemNumber"/>
+                                    <Binding Path="PosItem.ItemName"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                        <templates:ItemInfoListPopup x:Name="itemInfoList" Grid.Row="1" Width="700" Height="250"/>
+                    </Grid>
+                </Border>
+            </Grid>
+        </customs:PopupModal>
+        
+        <!-- pos items list -->
+        <DataGrid Grid.Row="1" Margin="0,0,7,0"
+                  ItemsSource="{Binding Path=PosItemsView,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_comparison_page}}}">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="SKU" SortMemberPath="PosItem.ItemNumber" HeaderStyle="{StaticResource DataGridColumnHeader.Center}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Margin="{StaticResource DataGridTextCell.Margin}">
+                                <!-- search for sku button -> to other side -->
+                                <Button Content="{Binding PosItem.ItemNumber}" Click="SearchSku_Click" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                        Tag="{Binding Path=FiltersReseller,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_comparison_page}}}"
+                                        ext:ItemsExtension.ItemNumber="{Binding PosItem.ItemNumber}">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BorderlessButton}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsExists}" Value="False">
+                                                    <Setter Property="Foreground" Value="Red"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <!-- copy sku button -->
+                                <Grid Style="{StaticResource DataGridCell.GridStyle.ShowOnHover}" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                    <Button Content="Copy" Style="{StaticResource LinkButton}" Command="{Binding CopySkuCommand}" FontSize="10"/>
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Item" Width="250">
+                    <DataGridTemplateColumn.CellStyle>
+                        <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource DataGridCell.Style.Default}">
+                            <Setter Property="ToolTipService.ShowDuration" Value="60000"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsExists}" Value="False">
+                                    <Setter Property="ToolTip" Value="{StaticResource ItemNotInResellerTooltip}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTemplateColumn.CellStyle>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Margin="{StaticResource DataGridTextCell.Margin}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <ToggleButton Click="ShowImageFullView_Click" Width="40" Height="40" Padding="0" Background="White" BorderBrush="Gainsboro" BorderThickness="1" Cursor="Hand" Template="{StaticResource BlankToggleButton}" ToolTip="Click for Full-View">
+                                    <Image Source="{Binding ImagePath,Converter={StaticResource BitmapImageConverter}}"/>
+                                </ToggleButton>
+                                <StackPanel Orientation="Vertical" Grid.Column="1" Margin="5,0,0,0">
+                                    <TextBlock Text="{Binding PosItem.ItemName}" TextTrimming="CharacterEllipsis">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsExists}" Value="False">
+                                                        <Setter Property="Foreground" Value="Red"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding PosItem.ItemDescription}" Foreground="Gray" FontStyle="Italic" FontSize="11" TextTrimming="CharacterEllipsis"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Qty" Binding="{Binding PosItem.Quantity}" HeaderStyle="{StaticResource DataGridColumnHeader.Center}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Center}"/>
+                <DataGridTemplateColumn Header="R-Price" SortMemberPath="PosItem.RegularPrice" HeaderStyle="{StaticResource DataGridColumnHeader.Right}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" Margin="{StaticResource DataGridTextCell.Margin}" VerticalAlignment="Center">
+                                <Button Style="{StaticResource BorderlessButton}" Click="ShowCanvasList_Click" HorizontalAlignment="Right" ToolTip="Show Canvas Listing">
+                                    <TextBlock>
+                                        <Run Text="{Binding PosItem.RegularPrice,StringFormat=N0}"/>
+                                        <Run Foreground="DarkOrange">
+                                            <Run.Style>
+                                                <Style TargetType="{x:Type Run}">
+                                                    <Setter Property="Text" Value="{Binding ItemInfoCount,StringFormat={}({0})}"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ItemInfoCount}" Value="0">
+                                                            <Setter Property="Text" Value=""/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Run.Style>
+                                        </Run>
+                                    </TextBlock>
+                                </Button>
+                                <Grid Style="{StaticResource DataGridCell.GridStyle.ShowOnHover}">
+                                    <Button Style="{StaticResource BorderlessButton}" Click="AddInfo_Click" ToolTip="Add Canvas" HorizontalAlignment="Right">
+                                        <TextBlock>
+                                        Canvas <Run FontFamily="{StaticResource fontawesome-solid}" Text="{StaticResource fa-plus}" Foreground="Green"/>
+                                        </TextBlock>
+                                    </Button>
+                                </Grid>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Department" Binding="{Binding PosItem.DepartmentName}" Width="95">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataGridTextColumn.ElementStyle.Left}">
+                            <Setter Property="TextWrapping" Value="Wrap"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTemplateColumn Header="Duplicate" SortMemberPath="DuplicateCount" HeaderStyle="{StaticResource DataGridColumnHeader.Center}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding DuplicateCount}" Click="ShowDuplicate_Click" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="{StaticResource DataGridTextCell.Margin}" Padding="3">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BorderlessButton}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding DuplicateCount}" Value="0">
+                                                <Setter Property="Foreground" Value="Red"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <!--<DataGridTextColumn Header="Update" Binding="{Binding ItemDetails.MemoUpdatedDate,StringFormat=MMM dd}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}" Foreground="Gray"/>-->
+                <DataGridTemplateColumn Header="Update" HeaderStyle="{StaticResource DataGridColumnHeader.Center}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{StaticResource DataGridTextCell.Margin}">
+                                <TextBlock Text="{Binding ItemDetails.MemoUpdatedDate,StringFormat=MMM dd}" TextAlignment="Center" Foreground="gray"/>
+                                <CheckBox Click="UpdateItemDetails_Click" IsChecked="{Binding ItemDetails.ForUpdate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Memo (To Do)" Width="*" SortMemberPath="ItemDetails.Memo">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Margin="{StaticResource DataGridTextCell.Margin}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding ItemDetails.Memo}" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                                <Grid Grid.Column="1" Style="{StaticResource DataGridCell.GridStyle.ShowOnHover}" Margin="5,0,0,0">
+                                    <Button Click="EditDetailsMemo_Click" Style="{StaticResource BorderlessButton}" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-edit}" ToolTip="Edit Memo" VerticalAlignment="Top" Foreground="Gray"/>
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- reseller items list -->
+        <DataGrid Grid.Row="1" Grid.Column="1" Margin="7,0,0,0"
+                  ItemsSource="{Binding Path=ResellerItemsView,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_comparison_page}}}">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="SKU" SortMemberPath="PosItem.ItemNumber" HeaderStyle="{StaticResource DataGridColumnHeader.Center}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Margin="{StaticResource DataGridTextCell.Margin}">
+                                <!-- search for sku button -> to other side -->
+                                <Button Content="{Binding ItemNumber}" Click="SearchSku_Click" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                        Tag="{Binding Path=FiltersPos,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_comparison_page}}}"
+                                        ext:ItemsExtension.ItemNumber="{Binding ActualItemNumber}">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BorderlessButton}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsExists}" Value="False">
+                                                    <Setter Property="Foreground" Value="Red"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <!-- copy sku button -->
+                                <Grid Style="{StaticResource DataGridCell.GridStyle.ShowOnHover}" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                    <Button Content="Copy" Style="{StaticResource LinkButton}" Command="{Binding CopySkuCommand}" FontSize="10"/>
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Item" Width="350">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Margin="{StaticResource DataGridTextCell.Margin}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ToggleButton Click="ShowImageFullView_Click" Width="40" Height="40" Padding="0" Background="White" BorderBrush="Gainsboro" BorderThickness="1" Cursor="Hand" Template="{StaticResource BlankToggleButton}" ToolTip="Click for Full-View">
+                                    <Image Source="{Binding ImagePath,Converter={StaticResource BitmapImageConverter}}"/>
+                                </ToggleButton>
+                                <StackPanel Orientation="Vertical" Grid.Column="1" Margin="5,0,0,0">
+                                    <TextBlock Text="{Binding ItemName}" TextTrimming="CharacterEllipsis">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsExists}" Value="False">
+                                                        <Setter Property="Foreground" Value="Red"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                                <Grid Grid.Column="2" Style="{StaticResource DataGridCell.GridStyle.ShowOnHover}">
+                                    <Button Click="EditItemName_Click" Style="{StaticResource BorderlessButton}" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-edit}" ToolTip="Edit Item Name" VerticalAlignment="Top" Foreground="Gray"/>
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <!-- pos qty -->
+                <DataGridTextColumn Header="POS" Binding="{Binding NewQuantity}" HeaderStyle="{StaticResource DataGridColumnHeader.Center}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataGridTextColumn.ElementStyle.Center}">
+                            <Setter Property="Foreground" Value="Silver"/>
+                            <Style.Triggers>
+                                <DataTrigger Value="False">
+                                    <DataTrigger.Binding>
+                                        <MultiBinding Converter="{StaticResource ObjectEqualMultiConverter}">
+                                            <Binding Path="Quantity"/>
+                                            <Binding Path="NewQuantity"/>
+                                        </MultiBinding>
+                                    </DataTrigger.Binding>
+                                    <Setter Property="Foreground" Value="Red"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTemplateColumn Header="Qty" HeaderStyle="{StaticResource DataGridColumnHeader.Center}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Margin="{StaticResource DataGridTextCell.Margin}">
+                                <TextBlock Text="{Binding Quantity}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <Grid VerticalAlignment="Bottom" HorizontalAlignment="Center" Style="{StaticResource DataGridCell.GridStyle.ShowOnHover}">
+                                    <Button Content="Update" Click="UpdateQuantity_Click" FontSize="10">
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource LinkButton}">
+                                                <Setter Property="Visibility" Value="Hidden"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Value="False">
+                                                        <DataTrigger.Binding>
+                                                            <MultiBinding Converter="{StaticResource ObjectEqualMultiConverter}">
+                                                                <Binding Path="Quantity"/>
+                                                                <Binding Path="NewQuantity"/>
+                                                            </MultiBinding>
+                                                        </DataTrigger.Binding>
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <!-- pos price -->
+                <DataGridTextColumn Header="POS" Binding="{Binding NewPrice,StringFormat=N0}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataGridTextColumn.ElementStyle.Right}">
+                            <Setter Property="Foreground" Value="Silver"/>
+                            <Style.Triggers>
+                                <DataTrigger Value="False">
+                                    <DataTrigger.Binding>
+                                        <MultiBinding Converter="{StaticResource ObjectEqualMultiConverter}">
+                                            <Binding Path="RegularPrice"/>
+                                            <Binding Path="NewPrice"/>
+                                        </MultiBinding>
+                                    </DataTrigger.Binding>
+                                    <Setter Property="Foreground" Value="Red"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTemplateColumn Header="R-Price" HeaderStyle="{StaticResource DataGridColumnHeader.Right}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Margin="{StaticResource DataGridTextCell.Margin}">
+                                <TextBlock Text="{Binding RegularPrice,StringFormat=N0}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                <Grid VerticalAlignment="Bottom" HorizontalAlignment="Center" Style="{StaticResource DataGridCell.GridStyle.ShowOnHover}">
+                                    <Button Content="Update" Click="UpdatePrice_Click" FontSize="10">
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource LinkButton}">
+                                                <Setter Property="Visibility" Value="Hidden"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Value="False">
+                                                        <DataTrigger.Binding>
+                                                            <MultiBinding Converter="{StaticResource ObjectEqualMultiConverter}">
+                                                                <Binding Path="RegularPrice"/>
+                                                                <Binding Path="NewPrice"/>
+                                                            </MultiBinding>
+                                                        </DataTrigger.Binding>
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

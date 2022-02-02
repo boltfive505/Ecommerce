@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:bolt5.ModalWpf.Primitive;assembly=bolt5.ModalWpf">
+    <DataTemplate x:Key="SaveCancelDelete" DataType="{x:Type local:ModalItem}">
+        <Grid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <local:ModalButton Content="CANCEL" ResultParameter="Cancel" Background="#ff2b2b"
+                                   ResultCommand="{Binding RelativeSource={RelativeSource AncestorType=local:ModalItem}, Path=ResultCommand}"/>
+                <local:ModalButton Content="SAVE" ResultParameter="Save" Background="#2b64ff"
+                                   ResultCommand="{Binding RelativeSource={RelativeSource AncestorType=local:ModalItem}, Path=ResultCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <local:ModalButton Content="DELETE" ResultParameter="Save" ResultKey="Delete" Background="Red"
+                                   ResultCommand="{Binding RelativeSource={RelativeSource AncestorType=local:ModalItem}, Path=ResultCommand}"/>
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="SelectCancel" DataType="{x:Type local:ModalItem}">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <local:ModalButton Content="CANCEL" ResultParameter="No" Background="#ff2b2b"
+                                   ResultCommand="{Binding RelativeSource={RelativeSource AncestorType=local:ModalItem}, Path=ResultCommand}"/>
+            <local:ModalButton Content="SELECT" ResultParameter="Yes" Background="#2b64ff"
+                                   ResultCommand="{Binding RelativeSource={RelativeSource AncestorType=local:ModalItem}, Path=ResultCommand}"/>
+        </StackPanel>
+    </DataTemplate>
+</ResourceDictionary>

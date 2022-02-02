@@ -1,0 +1,42 @@
+﻿<Window x:Class="Egate_Ecommerce.SplashScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Egate_Ecommerce"
+        mc:Ignorable="d"
+        Title="SplashScreen" Height="370" Width="370"
+        WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize" Background="Transparent"
+        AllowsTransparency="True">
+    <Border CornerRadius="999" Background="#fa5430">
+        <Grid>
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                <TextBlock Text="Egate Ecommerce" Foreground="White" TextAlignment="Center" FontSize="35" FontWeight="Bold"/>
+                <Image Source="res/cart.png" Width="150" Margin="10">
+                    <Image.Effect>
+                        <DropShadowEffect Opacity="1" ShadowDepth="5" BlurRadius="0"/>
+                    </Image.Effect>
+                </Image>
+            </StackPanel>
+
+            <Grid Margin="0,250,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock FontFamily="{StaticResource fontawesome-solid}" Text="{StaticResource fa-spinner}" Foreground="White"
+                       FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="35"/>
+                    </TextBlock.LayoutTransform>
+                    <TextBlock.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="(TextBlock.LayoutTransform).(RotateTransform.Angle)"
+                                                 To="360" Duration="0:0:1" RepeatBehavior="Forever"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </TextBlock.Triggers>
+                </TextBlock>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

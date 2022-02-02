@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="barcodeLabel.xsl"?>
+<ArrayOfBarcodeXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BarcodeXml>
+    <ItemNumber>111111</ItemNumber>
+    <ItemName>Personal goods</ItemName>
+  </BarcodeXml>
+  <BarcodeXml>
+    <ItemNumber>349056</ItemNumber>
+    <ItemName>Brother / Xerox C-Toner TN1000 / CT202137 (P115b) Black</ItemName>
+  </BarcodeXml>
+</ArrayOfBarcodeXml>

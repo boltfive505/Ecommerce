@@ -1,0 +1,723 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\CefSharp.Common.90.6.70\build\CefSharp.Common.props" Condition="Exists('..\packages\CefSharp.Common.90.6.70\build\CefSharp.Common.props')" />
+  <Import Project="..\packages\cef.redist.x86.90.6.7\build\cef.redist.x86.props" Condition="Exists('..\packages\cef.redist.x86.90.6.7\build\cef.redist.x86.props')" />
+  <Import Project="..\packages\cef.redist.x64.90.6.7\build\cef.redist.x64.props" Condition="Exists('..\packages\cef.redist.x64.90.6.7\build\cef.redist.x64.props')" />
+  <Import Project="..\packages\PropertyChanged.Fody.3.3.1\build\PropertyChanged.Fody.props" Condition="Exists('..\packages\PropertyChanged.Fody.3.3.1\build\PropertyChanged.Fody.props')" />
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A439978B-AF18-46D6-9534-53D279F8E052}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Egate_Ecommerce</RootNamespace>
+    <AssemblyName>Egate Ecommerce</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>egate ecommerce logo.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AForge, Version=2.2.5.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.2.2.5\lib\AForge.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Controls, Version=2.2.5.0, Culture=neutral, PublicKeyToken=a8ac264d1dc6b9d9, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.Controls.2.2.5\lib\AForge.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Imaging, Version=2.2.5.0, Culture=neutral, PublicKeyToken=ba8ddea9676ca48b, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.Imaging.2.2.5\lib\AForge.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Math, Version=2.2.5.0, Culture=neutral, PublicKeyToken=abba2e25397ee8c9, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.Math.2.2.5\lib\AForge.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video, Version=2.2.5.0, Culture=neutral, PublicKeyToken=cbfb6e07d173c401, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.Video.2.2.5\lib\AForge.Video.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video.DirectShow, Version=2.2.5.0, Culture=neutral, PublicKeyToken=61ea4348d43881b7, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.Video.DirectShow.2.2.5\lib\AForge.Video.DirectShow.dll</HintPath>
+    </Reference>
+    <Reference Include="bolt5.CustomControls.Wpf">
+      <HintPath>..\..\bolt5.CustomControls\bolt5.CustomControls.Wpf\bin\Debug\bolt5.CustomControls.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="bolt5.CustomHtmlCefEditor">
+      <HintPath>..\..\bolt5.CustomControls\bolt5.CustomHtmlCefEditor\bin\x86\Debug\bolt5.CustomHtmlCefEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="bolt5.CustomMappingObject">
+      <HintPath>..\..\bolt5.CustomControls\bolt5.CustomMappingObject\bin\Debug\bolt5.CustomMappingObject.dll</HintPath>
+    </Reference>
+    <Reference Include="bolt5.CustomMonthlyCalendar">
+      <HintPath>..\..\bolt5.CustomControls\bolt5.CustomMonthlyCalendar\bin\Debug\bolt5.CustomMonthlyCalendar.dll</HintPath>
+    </Reference>
+    <Reference Include="bolt5.FieldExpressions">
+      <HintPath>..\..\bolt5.CustomControls\bolt5.FieldExpressions\bin\Debug\bolt5.FieldExpressions.dll</HintPath>
+    </Reference>
+    <Reference Include="bolt5.ModalWpf">
+      <HintPath>..\..\bolt5.CustomControls\bolt5.ModalWpf\bin\Debug\bolt5.ModalWpf.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.6.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable.BouncyCastle.1.8.6\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CefSharp, Version=90.6.70.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
+      <HintPath>..\packages\CefSharp.Common.90.6.70\lib\net452\CefSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="CefSharp.Core, Version=90.6.70.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
+      <HintPath>..\packages\CefSharp.Common.90.6.70\lib\net452\CefSharp.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="CefSharp.Wpf, Version=90.6.70.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
+      <HintPath>..\packages\CefSharp.Wpf.90.6.70\lib\net452\CefSharp.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FontIcons.Wpf.FontAwesome">
+      <HintPath>..\..\bolt5.CustomControls\FontIcons.Wpf.FontAwesome\bin\Debug\FontIcons.Wpf.FontAwesome.dll</HintPath>
+    </Reference>
+    <Reference Include="Ghostscript.NET, Version=1.2.3.0, Culture=neutral, PublicKeyToken=f85051de34525b59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ghostscript.NET.1.2.3\lib\net40\Ghostscript.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.11.30.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.30\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.2.0.246, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.1.2.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Common.10.0.40219.1\lib\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Common.10.0.40219.1\lib\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Common.10.0.40219.1\lib\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.WinForms.10.0.40219.1\lib\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.10.50.1600.1\lib\Net20\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI, Version=2.5.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.5.3\lib\net45\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.5.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.5.3\lib\net45\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.5.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.5.3\lib\net45\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.5.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.5.3\lib\net45\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
+    <Reference Include="PropertyChanged, Version=3.3.1.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
+      <HintPath>..\packages\PropertyChanged.Fody.3.3.1\lib\net40\PropertyChanged.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite, Version=1.0.113.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.113.3\lib\net40\System.Data.SQLite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.113.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.113.0\lib\net40\System.Data.SQLite.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.113.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.113.0\lib\net40\System.Data.SQLite.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Tesseract, Version=4.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Tesseract.4.1.1\lib\net45\Tesseract.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing, Version=0.16.6.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.6\lib\net45\zxing.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.presentation, Version=0.16.6.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.6\lib\net45\zxing.presentation.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Classes\DataCache.cs" />
+    <Compile Include="Classes\DateRangeHelper.cs" />
+    <Compile Include="Classes\ECommerceHelper.cs" />
+    <Compile Include="Classes\ExcelHelper.cs" />
+    <Compile Include="Classes\Helpers.cs" />
+    <Compile Include="Classes\ImageHelper.cs" />
+    <Compile Include="Classes\ItemInfoCategoryTemplateSelector.cs" />
+    <Compile Include="Classes\KoreaShipListHelper.cs" />
+    <Compile Include="Classes\LuckyDeliveryHelper.cs" />
+    <Compile Include="Classes\LuckyShippingHelper.cs" />
+    <Compile Include="Classes\MobileInventoryHelper.cs" />
+    <Compile Include="Classes\NonInventoryItem.cs" />
+    <Compile Include="Classes\OcrHelper.cs" />
+    <Compile Include="Classes\PdfHelper.cs" />
+    <Compile Include="Classes\PeriodCalendarHelper.cs" />
+    <Compile Include="Classes\PurchaseRequestHelpers.cs" />
+    <Compile Include="Classes\TutorialsHelper.cs" />
+    <Compile Include="Converters\HierarchyMarginConverter.cs" />
+    <Compile Include="Converters\HtmlToPlainTextConverter.cs" />
+    <Compile Include="Converters\ObjectEqualMultiConverter.cs" />
+    <Compile Include="Enums\CompetitorLocation.cs" />
+    <Compile Include="Enums\DateRangeType.cs" />
+    <Compile Include="Enums\ItemInfoCategory.cs" />
+    <Compile Include="Enums\EntryLevel.cs" />
+    <Compile Include="Enums\KoreaShipStatus.cs" />
+    <Compile Include="Enums\TutorialPeriodType.cs" />
+    <Compile Include="Extensions\CloneCopyExt.cs" />
+    <Compile Include="Extensions\FileExtension.cs" />
+    <Compile Include="Modals\ECommerce\item keywords add modal.xaml.cs">
+      <DependentUpon>item keywords add modal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Objects\ItemKeywordViewModel.cs" />
+    <Compile Include="Objects\ItemPicturesItem.cs" />
+    <Compile Include="Extensions\ItemsExtension.cs" />
+    <Compile Include="Extensions\TaskExt.cs" />
+    <Compile Include="FileHelper.cs" />
+    <Compile Include="Classes\LuckyPurchaseItem.cs" />
+    <Compile Include="Classes\LuckyRecordsHelper.cs" />
+    <Compile Include="Classes\NotifiableCollectionView.cs" />
+    <Compile Include="Classes\PurchaseInfo.cs" />
+    <Compile Include="Classes\RelayCommand.cs" />
+    <Compile Include="InstanceManager.cs" />
+    <Compile Include="Modals\admin password modal.xaml.cs">
+      <DependentUpon>admin password modal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modals\ECommerce\employee add modal.xaml.cs">
+      <DependentUpon>employee add modal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modals\ECommerce\new item modal.xaml.cs">
+      <DependentUpon>new item modal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modals\ECommerce\reseller item edit modal.xaml.cs">
+      <DependentUpon>reseller item edit modal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modals\tutorialCategoryAddEdit_modal.xaml.cs">
+      <DependentUpon>tutorialCategoryAddEdit_modal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modals\ECommerce\item info add modal.xaml.cs">
+      <DependentUpon>item info add modal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Objects\EmployeeViewModel.cs" />
+    <Compile Include="Objects\IItem.cs" />
+    <Compile Include="Objects\ItemCompare.cs" />
+    <Compile Include="Objects\ItemDetailsViewModel.cs" />
+    <Compile Include="Objects\ItemInfoViewModel.cs" />
+    <Compile Include="Objects\LuckyDelivery\LuckyDeliveryReceiptViewModel.cs" />
+    <Compile Include="Objects\MobileInventory\MobileInventoryItem.cs" />
+    <Compile Include="Objects\NonInventoryViewModel.cs" />
+    <Compile Include="Objects\PosItemCompare.cs" />
+    <Compile Include="Pages\employee list page.xaml.cs">
+      <DependentUpon>employee list page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\item info page.xaml.cs">
+      <DependentUpon>item info page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\item keywords page.xaml.cs">
+      <DependentUpon>item keywords page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\new items page.xaml.cs">
+      <DependentUpon>new items page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\reseller shopee comparison page.xaml.cs">
+      <DependentUpon>reseller shopee comparison page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\reseller details page.xaml.cs">
+      <DependentUpon>reseller details page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\setup page.xaml.cs">
+      <DependentUpon>setup page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\reseller comparison page.xaml.cs">
+      <DependentUpon>reseller comparison page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Objects\Item.cs" />
+    <Compile Include="Reports\report view frm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\report view frm.Designer.cs">
+      <DependentUpon>report view frm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modals\tutorialEmployeeAddEdit_modal.xaml.cs">
+      <DependentUpon>tutorialEmployeeAddEdit_modal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modals\tutorialVideoAddEdit_modal.xaml.cs">
+      <DependentUpon>tutorialVideoAddEdit_modal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modals\web printing modal.xaml.cs">
+      <DependentUpon>web printing modal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Objects\Calendar\IPeriodGetter.cs" />
+    <Compile Include="Objects\KoreaShipList\KoreaShipItemViewModel.cs" />
+    <Compile Include="Objects\KoreaShipList\KoreaShipSubtotalViewModel.cs" />
+    <Compile Include="Objects\Calendar\PeriodCalendaDisplay.cs" />
+    <Compile Include="Objects\Calendar\PeriodCalendarDisplayCollection.cs" />
+    <Compile Include="Objects\LuckyShipping\LuckyShipItemViewModel.cs" />
+    <Compile Include="Objects\Tutorials\TutorialCategoryViewModel.cs" />
+    <Compile Include="Objects\Tutorials\TutorialEmployeeViewModel.cs" />
+    <Compile Include="Objects\Tutorials\TutorialVideoViewModel.cs" />
+    <Compile Include="Pages\tutorial calendar.xaml.cs">
+      <DependentUpon>tutorial calendar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\tutorials.xaml.cs">
+      <DependentUpon>tutorials.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ReportHelper.cs" />
+    <Compile Include="Templates\ImagePreviewPopup.cs" />
+    <Compile Include="Templates\ItemInfoCategoryContentControl.cs" />
+    <Compile Include="Templates\ItemInfoListPopup.xaml.cs">
+      <DependentUpon>ItemInfoListPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\open camera_modal.xaml.cs">
+      <DependentUpon>open camera_modal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\_ItemBase.cs" />
+    <Compile Include="Converters\BitmapImageConverter.cs" />
+    <Compile Include="Converters\BooleanlnverseConverter.cs" />
+    <Compile Include="Converters\FileNameConverter.cs" />
+    <Compile Include="Converters\IntToBoolConverter.cs" />
+    <Compile Include="Converters\LongToDateConverter.cs" />
+    <Compile Include="Converters\MarginConverter.cs" />
+    <Compile Include="Converters\NegativeValueConverter.cs" />
+    <Compile Include="Converters\NonInventoryImagePathConverter.cs" />
+    <Compile Include="Converters\NumericStringConverter.cs" />
+    <Compile Include="Converters\StringSingleLineConverter.cs" />
+    <Compile Include="Converters\ValueConverterGroup.cs" />
+    <Compile Include="Converters\ObjectToBoolConverter.cs" />
+    <Compile Include="Converters\VisibilityFromBoolConverter.cs" />
+    <Compile Include="Enums\EnumDescriptionTypeConverter.cs" />
+    <Compile Include="Enums\ShipType.cs" />
+    <Compile Include="Extensions\BoolExt.cs" />
+    <Compile Include="Extensions\DateTimeExt.cs" />
+    <Compile Include="Extensions\EnumExt.cs" />
+    <Compile Include="Extensions\ImageExt.cs" />
+    <Compile Include="Extensions\NPOIExt.cs" />
+    <Compile Include="Logs.cs" />
+    <Compile Include="Pages\1 create purchase request.xaml.cs">
+      <DependentUpon>1 create purchase request.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Quickbooks\PosItem.cs" />
+    <Compile Include="Quickbooks\PosMonthlySalesPeriod.cs" />
+    <Compile Include="Quickbooks\PosSalesItem.cs" />
+    <Compile Include="Quickbooks\QbPosInventory.cs" />
+    <Compile Include="Quickbooks\QbPosMonthlySales.cs" />
+    <Compile Include="SplashScreen.xaml.cs">
+      <DependentUpon>SplashScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\DataGridItemTemplate.xaml.cs">
+      <DependentUpon>DataGridItemTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="test.xaml.cs">
+      <DependentUpon>test.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="web print\objects\BarcodeXml.cs" />
+    <Compile Include="web print\objects\ScheduleXml.cs" />
+    <Compile Include="web print\objects\ShipListXml.cs" />
+    <Compile Include="web print\WebPrintHelper.cs" />
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Modals\admin password modal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modals\ECommerce\employee add modal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modals\ECommerce\item keywords add modal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modals\ECommerce\new item modal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modals\ECommerce\reseller item edit modal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modals\tutorialCategoryAddEdit_modal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modals\ECommerce\item info add modal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modals\tutorialEmployeeAddEdit_modal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modals\tutorialVideoAddEdit_modal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modals\web printing modal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\1 create purchase request.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\employee list page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\item info page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\item keywords page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\new items page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\reseller shopee comparison page.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\reseller details page.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\setup page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\reseller comparison page.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\tutorial calendar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\tutorials.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\DefaultResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SplashScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\AllConverters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ButtonStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\CheckBoxStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\CustomModalButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\CustomTabControlStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\CustomTabItemStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\DefaultDataGridStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\DefaultStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ImagePreviewPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\PlusMinusExpander.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Tooltips.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\TutorialCalendarStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates\DataGridItemTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates\ItemInfoListPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates\ItemInfoTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates\open camera_modal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="test.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Reports\report view frm.resx">
+      <DependentUpon>report view frm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\Egate_Ecommerce.Reports.Objects.Item.datasource" />
+    <None Include="Properties\DataSources\purchase_request.Reports.Objects.barcodeitem.datasource" />
+    <None Include="Properties\DataSources\purchase_request.Reports.Objects.packing.datasource" />
+    <None Include="Properties\DataSources\purchase_request.Reports.Objects.requestitem.datasource" />
+    <None Include="Properties\DataSources\purchase_request.Reports.Objects.shipinfo.datasource" />
+    <None Include="Properties\DataSources\purchase_request.Reports.Objects.shipitem.datasource" />
+    <None Include="Properties\DataSources\purchase_request.Reports.Objects.zerostockitem.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="tessdata\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <EmbeddedResource Include="Reports\ReportItems\bulk items report.rdlc" />
+    <EmbeddedResource Include="web print\webpage packs\ship list.zip" />
+    <EmbeddedResource Include="web print\webpage packs\barcode label.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Bulk Update\Bulk Update.csproj">
+      <Project>{63b8124e-b041-4396-a0bb-398313d62b4c}</Project>
+      <Name>Bulk Update</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ECommerce.Model\ECommerce.Model.csproj">
+      <Project>{28b89e76-cfcb-43d3-a7cc-7a95f768dfe6}</Project>
+      <Name>ECommerce.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EF6.ConfigurationTypes\EF6.ConfigurationTypes.csproj">
+      <Project>{0bbedda0-787f-4609-a5f7-656b0d7a015d}</Project>
+      <Name>EF6.ConfigurationTypes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\purchase request.Model - SQLite\purchase request.Model - SQLite.csproj">
+      <Project>{54f31f9a-7f12-4355-8252-70abb28c26ff}</Project>
+      <Name>purchase request.Model - SQLite</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tutorials.Model\Tutorials.Model.csproj">
+      <Project>{e191ec54-8915-4615-bb1b-86de97b18ab2}</Project>
+      <Name>Tutorials.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\no image available.jpg" />
+    <Resource Include="res\purchase request logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="gs\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="SHDocVw">
+      <Guid>{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>1</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="web print\stylesheets\schedule.xsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="web print\stylesheets\barcodeLabel.xsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="web print\stylesheets\shipItemList.xsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\po list.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="egate ecommerce logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\cart.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="py\excel shopee.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.113.3\build\net40\Stub.System.Data.SQLite.Core.NetFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.113.3\build\net40\Stub.System.Data.SQLite.Core.NetFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\Fody.6.3.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.6.3.0\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\PropertyChanged.Fody.3.3.1\build\PropertyChanged.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PropertyChanged.Fody.3.3.1\build\PropertyChanged.Fody.props'))" />
+    <Error Condition="!Exists('..\packages\Tesseract.4.1.1\build\Tesseract.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Tesseract.4.1.1\build\Tesseract.targets'))" />
+    <Error Condition="!Exists('..\packages\cef.redist.x64.90.6.7\build\cef.redist.x64.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x64.90.6.7\build\cef.redist.x64.props'))" />
+    <Error Condition="!Exists('..\packages\cef.redist.x86.90.6.7\build\cef.redist.x86.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x86.90.6.7\build\cef.redist.x86.props'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.Common.90.6.70\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.90.6.70\build\CefSharp.Common.props'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.Common.90.6.70\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.90.6.70\build\CefSharp.Common.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.113.3\build\net40\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.113.3\build\net40\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
+  <Import Project="..\packages\Fody.6.3.0\build\Fody.targets" Condition="Exists('..\packages\Fody.6.3.0\build\Fody.targets')" />
+  <Import Project="..\packages\Tesseract.4.1.1\build\Tesseract.targets" Condition="Exists('..\packages\Tesseract.4.1.1\build\Tesseract.targets')" />
+  <Import Project="..\packages\CefSharp.Common.90.6.70\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.90.6.70\build\CefSharp.Common.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

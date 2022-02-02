@@ -1,0 +1,77 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Egate_Ecommerce.Styles">
+    <Style x:Key="FocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <SolidColorBrush x:Key="TabItem.Static.Background" Color="#23282d"/>
+    <SolidColorBrush x:Key="TabItem.MouseOver.Background" Color="#4a545e"/>
+    <SolidColorBrush x:Key="TabItem.MouseOver.Foreground" Color="#00b9eb"/>
+    <SolidColorBrush x:Key="TabItem.Disabled.Background" Color="#23282d"/>
+    <SolidColorBrush x:Key="TabItem.Selected.Background" Color="#0073aa"/>
+    <Thickness x:Key="TabItem.Padding" Left="10" Right="10" Bottom="8" Top="8"/>
+
+    <Style TargetType="{x:Type TabItem}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        <Setter x:Name="headerForeground" Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="{StaticResource TabItem.Selected.Background}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="6,2,6,2"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
+                        <Border x:Name="mainBorder" BorderThickness="0,0,1,0" BorderBrush="DarkGray" Background="{StaticResource TabItem.Static.Background}">
+                            <Border x:Name="innerBorder" BorderThickness="0" Background="{TemplateBinding Background}" Opacity="0"/>
+                        </Border>
+                        <ContentPresenter x:Name="contentPresenter" ContentSource="Header" Focusable="False" 
+                                          HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                                          Margin="{StaticResource TabItem.Padding}" 
+                                          RecognizesAccessKey="True" 
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Panel.ZIndex" Value="1"/>
+                            <Setter Property="Opacity" TargetName="innerBorder" Value="1"/>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="TextBlock.Foreground" TargetName="contentPresenter" Value="{StaticResource TabItem.MouseOver.Foreground}"/>
+                            <Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Background}"/>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Opacity" TargetName="contentPresenter" Value="0.56"/>
+                            <Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Background}"/>
+                        </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="Egate_Ecommerce.Modals.ECommerce.reseller_item_edit_modal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Egate_Ecommerce.Modals.ECommerce"
+             xmlns:customs="clr-namespace:bolt5.CustomControls;assembly=bolt5.CustomControls.Wpf"
+             xmlns:xceed="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+             xmlns:html="clr-namespace:bolt5.CustomHtmlCefEditor;assembly=bolt5.CustomHtmlCefEditor"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="White">
+        <StackPanel Orientation="Vertical" Margin="{StaticResource SubModal.Group.Margin}">
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="SKU" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <TextBox Text="{Binding ItemNumber,UpdateSourceTrigger=PropertyChanged}" Width="150"/>
+                </customs:LabelContainer>
+                <customs:LabelContainer Header="Quantity" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <xceed:IntegerUpDown Value="{Binding Quantity,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                </customs:LabelContainer>
+                <customs:LabelContainer Header="R-Price" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <xceed:DecimalUpDown Value="{Binding RegularPrice,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                </customs:LabelContainer>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Margin="{StaticResource SubModal.Fields.Margin}">
+                    <customs:LabelContainer.Header>
+                        <TextBlock>
+                            Name <Run Text="{Binding ItemName.Length,StringFormat={}({0}),Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" Foreground="Gray"/>
+                        </TextBlock>
+                    </customs:LabelContainer.Header>
+                    <TextBox Text="{Binding ItemName,UpdateSourceTrigger=PropertyChanged}" Width="566" Height="40" TextWrapping="Wrap"/>
+                </customs:LabelContainer>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="Description" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <html:HtmlEditor HtmlContent="{Binding ItemDescription,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="800" Height="600"/>
+                </customs:LabelContainer>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="shipItemList.xsl"?>
+<ShipListXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ItemList>
+    <ShipItem>
+      <ItemNumber>111111</ItemNumber>
+      <ItemName>Personal goods</ItemName>
+      <ItemDescription>고지혈증약 32개</ItemDescription>
+      <Quantity>1</Quantity>
+      <ImagePath>C:\Users\Graphic Designer\Documents\Visual Studio 2019\Projects\purchase request\purchase request\bin\x86\Debug\qb\Item Pictures\111111_Def.jpg</ImagePath>
+    </ShipItem>
+    <ShipItem>
+      <ItemNumber>349056</ItemNumber>
+      <ItemName>Brother / Xerox C-Toner TN1000 / CT202137 (P115b) Black</ItemName>
+      <Quantity>8</Quantity>
+      <ImagePath>C:\Users\Graphic Designer\Documents\Visual Studio 2019\Projects\purchase request\purchase request\bin\x86\Debug\qb\Item Pictures\349056_Def.jpg</ImagePath>
+    </ShipItem>
+  </ItemList>
+  <Subtotal>
+    <Quantity>1</Quantity>
+    <ShipBy>lucky</ShipBy>
+  </Subtotal>
+</ShipListXml>

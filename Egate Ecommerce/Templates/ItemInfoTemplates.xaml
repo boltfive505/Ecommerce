@@ -1,0 +1,188 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Egate_Ecommerce.Templates"
+                    xmlns:me="clr-namespace:Egate_Ecommerce"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:linq="clr-namespace:System.Linq;assembly=System.Core"
+                    xmlns:objs="clr-namespace:Egate_Ecommerce.Objects"
+                    xmlns:customs="clr-namespace:bolt5.CustomControls;assembly=bolt5.CustomControls.Wpf"
+                    xmlns:html="clr-namespace:bolt5.CustomHtmlCefEditor;assembly=bolt5.CustomHtmlCefEditor"
+                    xmlns:xceed="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit">
+    <ObjectDataProvider x:Key="RatingsData" MethodName="Range" ObjectType="{x:Type linq:Enumerable}">
+        <ObjectDataProvider.MethodParameters>
+            <system:Int32>0</system:Int32>
+            <system:Int32>6</system:Int32>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+    
+    <!-- for adding -->
+    <DataTemplate x:Key="Competitor_Price_Add" DataType="{x:Type objs:ItemInfoViewModel}">
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="Competitor Url" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <TextBox Text="{Binding CompetitorUrl,UpdateSourceTrigger=PropertyChanged}" Width="286"/>
+                </customs:LabelContainer>
+                <customs:LabelContainer Header="POS Price" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <xceed:DecimalUpDown Value="{Binding PosItem.RegularPrice,Mode=OneWay}" Style="{StaticResource DisabledDecimalUpDown}" Width="80"/>
+                </customs:LabelContainer>
+                <customs:LabelContainer Header="Competitor Price" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <xceed:DecimalUpDown Value="{Binding CompetitorPrice,UpdateSourceTrigger=PropertyChanged}"/>
+                </customs:LabelContainer>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="Ratings" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <ComboBox ItemsSource="{Binding Source={StaticResource RatingsData}}" SelectedItem="{Binding CompetitorRatings,UpdateSourceTrigger=PropertyChanged}"/>
+                </customs:LabelContainer>
+                <customs:LabelContainer Header="Has Stocks" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <CheckBox IsChecked="{Binding CompetitorHasStocks,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource BigCheckBox}"/>
+                </customs:LabelContainer>
+                <customs:LabelContainer Header="Competitor Location" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <ComboBox ItemsSource="{Binding Source={StaticResource CompetitorLocationDataAll}}" SelectedItem="{Binding CompetitorLocation,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="150"/>
+                </customs:LabelContainer>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="Writer's Notes" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <html:HtmlEditor HtmlContent="{Binding ShortDescription,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="586" Height="180"/>
+                </customs:LabelContainer>
+            </StackPanel>
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="Faq_Add" DataType="{x:Type objs:ItemInfoViewModel}">
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="Short Description" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <html:HtmlEditor HtmlContent="{Binding ShortDescription,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="586" Height="180"/>
+                </customs:LabelContainer>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="Long Description" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <html:HtmlEditor HtmlContent="{Binding LongDescription,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="586" Height="180"/>
+                </customs:LabelContainer>
+            </StackPanel>
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="Product_Information_Add" DataType="{x:Type objs:ItemInfoViewModel}">
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="Short Description" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <html:HtmlEditor HtmlContent="{Binding ShortDescription,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="586" Height="180"/>
+                </customs:LabelContainer>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="Long Description" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <html:HtmlEditor HtmlContent="{Binding LongDescription,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="586" Height="180"/>
+                </customs:LabelContainer>
+            </StackPanel>
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="Questions_Answers_Add" DataType="{x:Type objs:ItemInfoViewModel}">
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="Short Description" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <html:HtmlEditor HtmlContent="{Binding ShortDescription,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="586" Height="180"/>
+                </customs:LabelContainer>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="Long Description" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <html:HtmlEditor HtmlContent="{Binding LongDescription,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="586" Height="180"/>
+                </customs:LabelContainer>
+            </StackPanel>
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="Issue_Add" DataType="{x:Type objs:ItemInfoViewModel}">
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="Issue" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <html:HtmlEditor HtmlContent="{Binding ShortDescription,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="586" Height="250"/>
+                </customs:LabelContainer>
+            </StackPanel>
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="Suggestion_Add" DataType="{x:Type objs:ItemInfoViewModel}">
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="Suggestion" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <html:HtmlEditor HtmlContent="{Binding ShortDescription,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="586" Height="250"/>
+                </customs:LabelContainer>
+            </StackPanel>
+        </StackPanel>
+    </DataTemplate>
+    
+    <!-- for preview -->
+    <DataTemplate x:Key="Competitor_Price_Preview" DataType="{x:Type objs:ItemInfoViewModel}">
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="Competitor Url" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <Button Style="{StaticResource LinkButton}" Content="{Binding CompetitorUrl}" Command="{Binding OpenURLCommand}" Width="286" ToolTip="Visit URL"/>
+                </customs:LabelContainer>
+                <customs:LabelContainer Header="Competitor Price" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <xceed:DecimalUpDown Value="{Binding CompetitorPrice,UpdateSourceTrigger=PropertyChanged}" Width="120" Foreground="Red" FontWeight="Bold" Style="{StaticResource DisabledDecimalUpDown}"/>
+                </customs:LabelContainer>
+                <customs:LabelContainer Header="Competitor Location" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <TextBox Text="{Binding CompetitorLocation,Mode=OneWay}" Width="150" Style="{StaticResource DisabledTextbox}"/>
+                </customs:LabelContainer>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="Description" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <html:HtmlPreview HtmlContent="{Binding ShortDescription,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" Width="586" Height="180"/>
+                </customs:LabelContainer>
+            </StackPanel>
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="Faq_Preview" DataType="{x:Type objs:ItemInfoViewModel}">
+        <Grid Height="200">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <customs:LabelContainer Header="Short Description" Margin="{StaticResource SubModal.Fields.Margin}">
+                <html:HtmlPreview HtmlContent="{Binding ShortDescription,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </customs:LabelContainer>
+            <customs:LabelContainer Header="Long Description" Grid.Column="1" Margin="{StaticResource SubModal.Fields.Margin}">
+                <html:HtmlPreview HtmlContent="{Binding LongDescription,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </customs:LabelContainer>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="Product_Information_Preview" DataType="{x:Type objs:ItemInfoViewModel}">
+        <Grid Height="200">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <customs:LabelContainer Header="Short Description" Margin="{StaticResource SubModal.Fields.Margin}">
+                <html:HtmlPreview HtmlContent="{Binding ShortDescription,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </customs:LabelContainer>
+            <customs:LabelContainer Header="Long Description" Grid.Column="1" Margin="{StaticResource SubModal.Fields.Margin}">
+                <html:HtmlPreview HtmlContent="{Binding LongDescription,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </customs:LabelContainer>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="Questions_Answers_Preview" DataType="{x:Type objs:ItemInfoViewModel}">
+        <Grid Height="200">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <customs:LabelContainer Header="Short Description" Margin="{StaticResource SubModal.Fields.Margin}">
+                <html:HtmlPreview HtmlContent="{Binding ShortDescription,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </customs:LabelContainer>
+            <customs:LabelContainer Header="Long Description" Grid.Column="1" Margin="{StaticResource SubModal.Fields.Margin}">
+                <html:HtmlPreview HtmlContent="{Binding LongDescription,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </customs:LabelContainer>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="Issue_Preview" DataType="{x:Type objs:ItemInfoViewModel}">
+        <Grid Height="200">
+            <customs:LabelContainer Header="Issue" Margin="{StaticResource SubModal.Fields.Margin}">
+                <html:HtmlPreview HtmlContent="{Binding ShortDescription,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </customs:LabelContainer>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="Suggestion_Preview" DataType="{x:Type objs:ItemInfoViewModel}">
+        <Grid Height="200">
+            <customs:LabelContainer Header="Suggestion" Margin="{StaticResource SubModal.Fields.Margin}">
+                <html:HtmlPreview HtmlContent="{Binding ShortDescription,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </customs:LabelContainer>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

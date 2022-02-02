@@ -1,0 +1,336 @@
+﻿<Page x:Class="Egate_Ecommerce.Pages.reseller_shopee_comparison_page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Egate_Ecommerce.Pages"
+      xmlns:me="clr-namespace:Egate_Ecommerce"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:converters="clr-namespace:Egate_Ecommerce.Converters"
+      xmlns:templates="clr-namespace:Egate_Ecommerce.Templates"
+      xmlns:ext="clr-namespace:Egate_Ecommerce.Extensions"
+      xmlns:customs="clr-namespace:bolt5.CustomControls;assembly=bolt5.CustomControls.Wpf"
+      xmlns:qb="clr-namespace:Egate_Ecommerce.Quickbooks"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="reseller_shopee_comparison_page" Loaded="Page_Loaded">
+    <Page.Resources>
+        <converters:BitmapImageConverter x:Key="BitmapImageConverter" DecodePixelHeight="100"/>
+        <converters:BitmapImageConverter x:Key="BitmapImageConverterFull"/>
+        <converters:ObjectEqualMultiConverter x:Key="ObjectEqualMultiConverter"/>
+    </Page.Resources>
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="130"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Margin="0,0,7,7" DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_shopee_comparison_page}}}">
+            <StackPanel Orientation="Horizontal">
+                <!-- reseller filters -->
+                <GroupBox VerticalAlignment="Top" HorizontalAlignment="Left" DataContext="{Binding FiltersReseller}">
+                    <GroupBox.Header>
+                        <TextBlock Text="WOO STORE" FontWeight="Bold" Foreground="DarkOrange" FontSize="14"/>
+                    </GroupBox.Header>
+                    <StackPanel Orientation="Vertical" Margin="3">
+                        <StackPanel Orientation="Horizontal" Margin="0,2,0,2">
+                            <customs:LabelContainer Header="Keyword" Margin="{StaticResource WrapPanelSpacing}">
+                                <TextBox Text="{Binding FilterKeyword,UpdateSourceTrigger=PropertyChanged}" Width="250"/>
+                            </customs:LabelContainer>
+                            <customs:LabelContainer Header="" Margin="{StaticResource WrapPanelResetSpacing}">
+                                <Button FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-undo-alt}" Command="{Binding ResetCommand}" Height="22" Width="22" Padding="0"/>
+                            </customs:LabelContainer>
+                            <customs:LabelContainer Header="" Margin="{StaticResource WrapPanelResetSpacing}"
+                                                    DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_shopee_comparison_page}}}">
+                                <!-- print items -->
+                                <Button FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-print}" Foreground="#487fc1" Width="22" Height="22" Padding="0"
+                                        Click="PrintItems_Click" Tag="{Binding Path=ResellerItemsView}"/>
+                            </customs:LabelContainer>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+                <Grid Margin="50,7,0,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                        <!-- import reseller excel file -->
+                        <Button Click="ImportResellerFile_Click" Background="LightGreen">
+                            <TextBlock ToolTip="{StaticResource ImportResellerFileTooltip}" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="999999">
+                                Import <Run Style="{StaticResource QuestionRunStyle}"/>
+                            </TextBlock>
+                        </Button>
+                        <!-- file -->
+                        <customs:LabelContainer Header="Open Woo Store File: " Placement="Left" Margin="15,0,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <Button Click="OpenFile_Click" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-file}" Style="{StaticResource BorderlessButton}" Foreground="#f5c603" FontSize="13" ToolTip="Click to open file"
+                                        me:FileExtension.FileName="{Binding ResellerFile}" HorizontalAlignment="Left"/>
+                                <!-- file date -->
+                                <TextBlock Text="{Binding TotalsReseller.FileDate,StringFormat=MM/dd/yyyy}" VerticalAlignment="Center" Margin="5,0,0,0" Foreground="Gray"/>
+                            </StackPanel>
+                        </customs:LabelContainer>
+                    </StackPanel>
+                    <!-- export reseller excel file -->
+                    <Button Click="ExportResellerFile_Click" Background="Purple" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,41">
+                        <TextBlock ToolTip="{StaticResource ExportResellerFileTooltip}" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="999999">
+                                Export <Run Style="{StaticResource QuestionRunStyle}"/>
+                        </TextBlock>
+                    </Button>
+                </Grid>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+                <!-- reseller totals -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom"
+                        DataContext="{Binding TotalsReseller}">
+                    <TextBlock>
+                    Woo Store Qty: <Run Text="{Binding TotalCount}" FontWeight="Bold" Foreground="Green"/>
+                    </TextBlock>
+                    <Button Style="{StaticResource LinkButton}" Click="ShowMissing_Click" Margin="30,0,0,0" IsHitTestVisible="False"
+                        Tag="{Binding Path=FiltersReseller,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_shopee_comparison_page}}}">
+                        <TextBlock Margin="30,0,0,0" Foreground="Black">
+                        Not In SHOPEE: <Run Text="{Binding NotExistsCount}" FontWeight="Bold" Foreground="Red"/>
+                        </TextBlock>
+                    </Button>
+                </StackPanel>
+                <!-- show missing -->
+                <CheckBox Content="Show Not In SHOPEE" VerticalAlignment="Bottom" Margin="30,0,0,0"
+                          IsChecked="{Binding Path=FiltersReseller.ShowNotExists,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_shopee_comparison_page}}}"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Column="1" Margin="7,0,0,7" DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_shopee_comparison_page}}}">
+            <StackPanel Orientation="Horizontal">
+                <!-- shopee filters -->
+                <GroupBox VerticalAlignment="Top" HorizontalAlignment="Left" DataContext="{Binding FiltersShopee}">
+                    <GroupBox.Header>
+                        <TextBlock Text="SHOPEE" FontWeight="Bold" Foreground="DarkOrange" FontSize="14"/>
+                    </GroupBox.Header>
+                    <StackPanel Orientation="Vertical" Margin="3">
+                        <StackPanel Orientation="Horizontal" Margin="0,2,0,2">
+                            <customs:LabelContainer Header="Keyword" Margin="{StaticResource WrapPanelSpacing}">
+                                <TextBox Text="{Binding FilterKeyword,UpdateSourceTrigger=PropertyChanged}" Width="250"/>
+                            </customs:LabelContainer>
+                            <customs:LabelContainer Header="" Margin="{StaticResource WrapPanelResetSpacing}">
+                                <Button FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-undo-alt}" Command="{Binding ResetCommand}" Height="22" Width="22" Padding="0"/>
+                            </customs:LabelContainer>
+                            <customs:LabelContainer Header="" Margin="{StaticResource WrapPanelResetSpacing}"
+                                                    DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_shopee_comparison_page}}}">
+                                <!-- print items -->
+                                <Button FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-print}" Foreground="#487fc1" Width="22" Height="22" Padding="0"
+                                        Click="PrintItems_Click" Tag="{Binding Path=ShopeeItemsView}"/>
+                            </customs:LabelContainer>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+                <Grid Margin="50,7,0,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                        <!-- import shopee excel file -->
+                        <Button Click="ImportShopeeFile_Click" Background="LightGreen">
+                            <TextBlock ToolTip="{StaticResource ImportShopeeFileTooltip}" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="999999">
+                                Import <Run Style="{StaticResource QuestionRunStyle}"/>
+                            </TextBlock>
+                        </Button>
+                        <!-- file -->
+                        <customs:LabelContainer Header="Open Shopee File: " Placement="Left" Margin="15,0,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <Button Click="OpenFile_Click" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-file}" Style="{StaticResource BorderlessButton}" Foreground="#f5c603" FontSize="13" ToolTip="Click to open file"
+                                        me:FileExtension.FileName="{Binding ShopeeFile}" HorizontalAlignment="Left"/>
+                                <!-- file date -->
+                                <TextBlock Text="{Binding TotalsShopee.FileDate,StringFormat=MM/dd/yyyy}" VerticalAlignment="Center" Margin="5,0,0,0" Foreground="Gray"/>
+                            </StackPanel>
+                        </customs:LabelContainer>
+                    </StackPanel>
+                    <!-- export shopee excel file -->
+                    <Button Click="ExportShopeeFile_Click" Background="Purple" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,41">
+                        <TextBlock ToolTip="{StaticResource ExportShopeeFileTooltip}" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="999999">
+                                Export <Run Style="{StaticResource QuestionRunStyle}"/>
+                        </TextBlock>
+                    </Button>
+                </Grid>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+                <!-- shopee totals -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom"
+                        DataContext="{Binding TotalsShopee}">
+                    <TextBlock>
+                    Shopee Qty: <Run Text="{Binding TotalCount}" FontWeight="Bold" Foreground="Green"/>
+                    </TextBlock>
+                    <Button Style="{StaticResource LinkButton}" Click="ShowMissing_Click" Margin="30,0,0,0" IsHitTestVisible="False"
+                        Tag="{Binding Path=FiltersShopee,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_shopee_comparison_page}}}">
+                        <TextBlock Margin="30,0,0,0" Foreground="Black">
+                        Not In WOO STORE: <Run Text="{Binding NotExistsCount}" FontWeight="Bold" Foreground="Red"/>
+                        </TextBlock>
+                    </Button>
+                </StackPanel>
+                <!-- show missing -->
+                <CheckBox Content="Show Not In WOO STORE" VerticalAlignment="Bottom" Margin="30,0,0,0"
+                           IsChecked="{Binding Path=FiltersShopee.ShowNotExists,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_shopee_comparison_page}}}"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- image full view popup -->
+        <templates:ImagePreviewPopup x:Name="imageFullPopup" Placement="Mouse" ImageSource="{Binding ImagePath}"/>
+
+        <!-- edit name popup -->
+        <customs:PopupModal x:Name="editItemNamePopup" Placement="Bottom">
+            <Grid>
+                <Grid.Effect>
+                    <DropShadowEffect/>
+                </Grid.Effect>
+                <Border Background="White" BorderBrush="Gray" BorderThickness="1" Margin="0,0,3,3">
+                    <Grid Margin="8">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <customs:LabelContainer Header="Edit Item Name">
+                            <TextBox Text="{Binding ItemName,UpdateSourceTrigger=PropertyChanged}" Width="300" TextWrapping="WrapWithOverflow"/>
+                        </customs:LabelContainer>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" Margin="0,3,0,0">
+                            <Button Content="Cancel" Command="{Binding ElementName=editItemNamePopup,Path=CloseCommand}" Background="Salmon"/>
+                            <Button Content="Save" Command="{Binding ElementName=editItemNamePopup,Path=SubmitCommand}" Background="LightGreen"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+        </customs:PopupModal>
+
+        <!-- reseller items list -->
+        <DataGrid Grid.Row="1" Margin="0,0,7,0" ItemsSource="{Binding Path=ResellerItemsView,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_shopee_comparison_page}}}">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="SKU" SortMemberPath="ShopeeItem.ItemNumber" HeaderStyle="{StaticResource DataGridColumnHeader.Center}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Margin="{StaticResource DataGridTextCell.Margin}">
+                                <!-- search for sku button -> to other side -->
+                                <Button Content="{Binding ItemNumber}" Click="SearchSku_Click" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                        Tag="{Binding Path=FiltersShopee,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_shopee_comparison_page}}}"
+                                        ext:ItemsExtension.ItemNumber="{Binding ActualItemNumber}">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BorderlessButton}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsExists}" Value="False">
+                                                    <Setter Property="Foreground" Value="Red"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <!-- copy sku button -->
+                                <Grid Style="{StaticResource DataGridCell.GridStyle.ShowOnHover}" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                    <Button Content="Copy" Style="{StaticResource LinkButton}" Command="{Binding CopySkuCommand}" FontSize="10"/>
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Item" Width="350">
+                    <DataGridTemplateColumn.CellStyle>
+                        <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource DataGridCell.Style.Default}">
+                            <Setter Property="ToolTipService.ShowDuration" Value="60000"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsExists}" Value="False">
+                                    <Setter Property="ToolTip" Value="{StaticResource ItemNotInShopeeTooltip}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTemplateColumn.CellStyle>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Margin="{StaticResource DataGridTextCell.Margin}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ToggleButton Click="ShowImageFullView_Click" Width="40" Height="40" Padding="0" Background="White" BorderBrush="Gainsboro" BorderThickness="1" Cursor="Hand" Template="{StaticResource BlankToggleButton}" ToolTip="Click for Full-View">
+                                    <Image Source="{Binding ImagePath,Converter={StaticResource BitmapImageConverter}}"/>
+                                </ToggleButton>
+                                <StackPanel Orientation="Vertical" Grid.Column="1" Margin="5,0,0,0">
+                                    <TextBlock Text="{Binding ItemName}" TextTrimming="CharacterEllipsis">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsExists}" Value="False">
+                                                        <Setter Property="Foreground" Value="Red"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Qty" Binding="{Binding Quantity}" HeaderStyle="{StaticResource DataGridColumnHeader.Center}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Center}"/>
+                <DataGridTextColumn Header="R-Price" Binding="{Binding RegularPrice}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- shopee items list -->
+        <DataGrid Grid.Row="1" Grid.Column="1" Margin="7,0,0,0"
+                  ItemsSource="{Binding Path=ShopeeItemsView,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_shopee_comparison_page}}}">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="SKU" SortMemberPath="ShopeeItem.ItemNumber" HeaderStyle="{StaticResource DataGridColumnHeader.Center}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Margin="{StaticResource DataGridTextCell.Margin}">
+                                <!-- search for sku button -> to other side -->
+                                <Button Content="{Binding ItemNumber}" Click="SearchSku_Click" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                        Tag="{Binding Path=FiltersShopee,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:reseller_shopee_comparison_page}}}"
+                                        ext:ItemsExtension.ItemNumber="{Binding ActualItemNumber}">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BorderlessButton}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsExists}" Value="False">
+                                                    <Setter Property="Foreground" Value="Red"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <!-- copy sku button -->
+                                <Grid Style="{StaticResource DataGridCell.GridStyle.ShowOnHover}" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                    <Button Content="Copy" Style="{StaticResource LinkButton}" Command="{Binding CopySkuCommand}" FontSize="10"/>
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Item" Width="350">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Margin="{StaticResource DataGridTextCell.Margin}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ToggleButton Click="ShowImageFullView_Click" Width="40" Height="40" Padding="0" Background="White" BorderBrush="Gainsboro" BorderThickness="1" Cursor="Hand" Template="{StaticResource BlankToggleButton}" ToolTip="Click for Full-View">
+                                    <Image Source="{Binding ImagePath,Converter={StaticResource BitmapImageConverter}}"/>
+                                </ToggleButton>
+                                <StackPanel Orientation="Vertical" Grid.Column="1" Margin="5,0,0,0">
+                                    <TextBlock Text="{Binding ItemName}" TextTrimming="CharacterEllipsis">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsExists}" Value="False">
+                                                        <Setter Property="Foreground" Value="Red"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Qty" Binding="{Binding Quantity}" HeaderStyle="{StaticResource DataGridColumnHeader.Center}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Center}"/>
+                <DataGridTextColumn Header="R-Price" Binding="{Binding RegularPrice}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

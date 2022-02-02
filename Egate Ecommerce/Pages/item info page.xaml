@@ -1,0 +1,179 @@
+﻿<Page x:Class="Egate_Ecommerce.Pages.item_info_page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Egate_Ecommerce.Pages"
+      xmlns:me="clr-namespace:Egate_Ecommerce"
+      xmlns:templates="clr-namespace:Egate_Ecommerce.Templates"
+      xmlns:converters="clr-namespace:Egate_Ecommerce.Converters"
+      xmlns:qb="clr-namespace:Egate_Ecommerce.Quickbooks"
+      xmlns:ext="clr-namespace:Egate_Ecommerce.Extensions"
+      xmlns:customs="clr-namespace:bolt5.CustomControls;assembly=bolt5.CustomControls.Wpf"
+      xmlns:xceed="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="item_info_page" Loaded="Page_Loaded">
+    <Page.Resources>
+        <converters:BitmapImageConverter x:Key="BitmapImageConverter" DecodePixelHeight="100"/>
+        <converters:BitmapImageConverter x:Key="BitmapImageConverterFull"/>
+    </Page.Resources>
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!-- filters item info -->
+        <GroupBox Header="Filters" Grid.Column="1" VerticalAlignment="Top"
+                  DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:item_info_page}},Path=FiltersItemInfo}">
+            <Grid HorizontalAlignment="Left">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <ItemsControl ItemsSource="{Binding CategoryShowList}" VerticalAlignment="Center" Margin="0,3,0,3">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding IsChecked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="{StaticResource WrapPanelCheckBoxSpacing}">
+                                <CheckBox.Content>
+                                    <TextBlock>
+                                            <Run Text="{Binding Category,Mode=OneWay}"/>
+                                            <Run Foreground="Red">
+                                                <Run.Style>
+                                                    <Style TargetType="{x:Type Run}">
+                                                        <Setter Property="Text" Value="{Binding Count,Mode=OneWay,StringFormat={}({0})}"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Count}" Value="0">
+                                                                <Setter Property="Text" Value="{x:Null}"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Run.Style>
+                                            </Run>
+                                    </TextBlock>
+                                </CheckBox.Content>
+                            </CheckBox>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+                <WrapPanel Orientation="Horizontal" Grid.Row="1">
+                    <ComboBox ItemsSource="{Binding EmployeeList}" SelectedValue="{Binding FilterUpdatedBy,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="EmployeeName" SelectedValuePath="Id" Margin="{StaticResource WrapPanelSpacing}" VerticalAlignment="Top" Width="150"/>
+                    <customs:LabelContainer Header="Keyword" Placement="Left" Margin="{StaticResource WrapPanelSpacing}">
+                        <TextBox Width="150" Height="22" VerticalAlignment="Center" Text="{Binding FilterKeyword,UpdateSourceTrigger=PropertyChanged}"/>
+                    </customs:LabelContainer>
+                    <customs:LabelContainer Header="Department" Placement="Left" Margin="{StaticResource WrapPanelSpacing}">
+                        <ComboBox Width="150" ItemsSource="{Binding Source={x:Static qb:QbPosInventory.DepartmentListSelection}}" SelectedItem="{Binding FilterDepartment,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>
+                    </customs:LabelContainer>
+                    <StackPanel Orientation="Horizontal" Margin="{StaticResource WrapPanelSpacing}">
+                        <TextBlock Text="from " VerticalAlignment="Center" Foreground="Gray"/>
+                        <xceed:DateTimePicker Value="{Binding FilterDateFrom,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="100" Margin="{StaticResource WrapPanelSpacing}"/>
+                        <TextBlock Text="to " VerticalAlignment="Center" Foreground="Gray"/>
+                        <xceed:DateTimePicker Value="{Binding FilterDateTo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="{StaticResource WrapPanelSpacing}"/>
+                        <Button Content="This Month" Style="{StaticResource LinkButton}" Click="ApplyDateRange_btn_Click"
+                                        Margin="5,0,0,0" Tag="{x:Static me:DateRangeType.ThisMonth}"/>
+                        <Button Content="Last Month" Style="{StaticResource LinkButton}"  Click="ApplyDateRange_btn_Click"
+                                        Margin="8,0,0,0" Tag="{x:Static me:DateRangeType.LastMonth}"/>
+                        <Button Content="Today" Style="{StaticResource LinkButton}"  Click="ApplyDateRange_btn_Click"
+                                        Margin="8,0,0,0" Tag="{x:Static me:DateRangeType.Today}"/>
+                    </StackPanel>
+                    <CheckBox Content="Show MORE Expensive Price" IsChecked="{Binding ShowMoreExpensivePrice}" VerticalAlignment="Center" Margin="{StaticResource WrapPanelCheckBoxSpacing}"/>
+                    <Button Command="{Binding ResetCommand}" Style="{StaticResource IconButton}" Content="{StaticResource fa-undo-alt}" Margin="15,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Reset Filters"/>
+                </WrapPanel>
+            </Grid>
+        </GroupBox>
+        
+        <!-- totals item info -->
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,8" VerticalAlignment="Bottom"
+                    DataContext="{Binding Path=TotalsItemInfo,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:item_info_page}}}">
+            <TextBlock>
+                Total Canvas: <Run Text="{Binding TotalItemInfoCount}" Foreground="Red" FontWeight="Bold"/>
+            </TextBlock>
+        </StackPanel>
+        
+        <!-- image full view popup -->
+        <templates:ImagePreviewPopup x:Name="imageFullPopup" Placement="Mouse"
+                                     ImageSource="{Binding PosItem.ImagePath}"/>
+
+        <!-- item info list -->
+        <DataGrid Grid.Row="1" ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:item_info_page}},Path=ItemInfoList}">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Style="{StaticResource DataGridCell.GridStyle.ShowOnHover}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="{StaticResource DataGridTextCell.Margin}">
+                                <Button Style="{StaticResource BorderlessButton}" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-edit}" Click="AddInfo_Click" Foreground="Navy" ToolTip="Edit Item Information"/>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="SKU" HeaderStyle="{StaticResource DataGridColumnHeader.Center}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Margin="{StaticResource DataGridTextCell.Margin}">
+                                <Button Content="{Binding ItemNumber}" Click="SearchSku_Click" Style="{StaticResource BorderlessButton}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                        Tag="{Binding Path=FiltersItemInfo,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:item_info_page}}}"
+                                        ext:ItemsExtension.ItemNumber="{Binding ItemNumber}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Category" Binding="{Binding Category}" HeaderStyle="{StaticResource DataGridColumnHeader.Left}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}"/>
+                <DataGridTextColumn Header="POS Price" Binding="{Binding PosItem.RegularPrice,StringFormat=N0}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}" Foreground="Blue" FontWeight="Bold"/>
+                <DataGridTemplateColumn Header="Item" Width="350">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Margin="{StaticResource DataGridTextCell.Margin}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <ToggleButton Click="ShowImageFullView_Click" Width="40" Height="40" Padding="0" Background="White" BorderBrush="Gainsboro" BorderThickness="1" Cursor="Hand" Tag="{Binding PosItem.ImagePath,Mode=OneWay}" Template="{StaticResource BlankToggleButton}" ToolTip="Click for Full-View">
+                                    <Image Source="{Binding PosItem.ImagePath,Converter={StaticResource BitmapImageConverter}}"/>
+                                </ToggleButton>
+                                <TextBlock Grid.Column="1" Margin="5,0,0,0" TextTrimming="CharacterEllipsis">
+                                    <Run Text="{Binding PosItem.ItemName}"/><LineBreak/>
+                                    <Run Text="{Binding PosItem.ItemDescription}" Foreground="Gray" FontStyle="Italic" FontSize="11"/>
+                                </TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Department" Binding="{Binding PosItem.DepartmentName}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}"/>
+                <DataGridTextColumn Header="Updated" Binding="{Binding UpdatedDate,StringFormat=MM/dd/yy}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}" Foreground="Gray"/>
+                <DataGridTextColumn Header="By" Binding="{Binding UpdatedByEmployee.EmployeeName}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}" Foreground="Gray" Width="80"/>
+                <DataGridTemplateColumn Header="Url" HeaderStyle="{StaticResource DataGridColumnHeader.Center}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-globe-americas}" Foreground="#495057" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                    ToolTip="{Binding CompetitorUrl}" Command="{Binding OpenURLCommand}">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BorderlessButton}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding CompetitorUrl}" Value="">
+                                                <Setter Property="Visibility" Value="Hidden"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding CompetitorUrl}" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Hidden"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Price" Binding="{Binding CompetitorPrice,StringFormat=N0}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}" Foreground="Red" FontWeight="Bold"/>
+                <DataGridTextColumn Header="Ratings" Binding="{Binding CompetitorRatings}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}"/>
+                <DataGridCheckBoxColumn Header="Stocks" Binding="{Binding CompetitorHasStocks}" HeaderStyle="{StaticResource DataGridColumnHeader.Center}" ElementStyle="{StaticResource DataGridCheckBoxColumn.ElementStyle}"/>
+                <DataGridTextColumn Header="Location" Binding="{Binding CompetitorLocation}" HeaderStyle="{StaticResource DataGridColumnHeader.Left}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}"/>
+                <DataGridTextColumn Header="Writer's Notes" Binding="{Binding ShortDescription,Converter={StaticResource HtmlToPlainTextConverter}}" HeaderStyle="{StaticResource DataGridColumnHeader.Left}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}" Width="*"/>
+                <DataGridTextColumn Header="Long Desc." Binding="{Binding LongDescription,Converter={StaticResource HtmlToPlainTextConverter}}" HeaderStyle="{StaticResource DataGridColumnHeader.Left}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>
